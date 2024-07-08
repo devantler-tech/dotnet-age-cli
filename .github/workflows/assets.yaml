@@ -1,0 +1,28 @@
+name: Assets
+
+on:
+  schedule:
+    - cron: "59 23 * * *"
+  workflow_dispatch:
+
+jobs:
+  download-binary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ⤵️ Get Age binary
+        run: |
+          ./.github/scripts/get-age-binary.sh
+      - name: ✍🏻 Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: Update Age binary
+          title: Update Age binary
+          body: |
+            This PR updates the Age binary used by Devantler.AgeCLI to the latest version.
+          branch: update-age-binary
+          delete-branch: true
+          labels: dependencies
+          reviewers: devantler
+          assignees: devantler
+          signoff: true
