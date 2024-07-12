@@ -1,23 +1,22 @@
-namespace Devantler.AgeCLI.Tests.Unit.AgeKeyTests;
+namespace Devantler.AgeCLI.Tests.AgeKeyTests;
 
 /// <summary>
-/// Tests for the <see cref="AgeCLI.AddKeyAsync(bool, CancellationToken)"/> method and the <see cref="AgeCLI.AddKeyAsync(string, bool, bool, CancellationToken)"/> method.
+/// Tests for the <see cref="AgeKeygenCLI.AddKeyAsync(bool, CancellationToken)"/> method and the <see cref="AgeKeygenCLI.AddKeyAsync(string, bool, bool, CancellationToken)"/> method.
 /// </summary>
 public class GenerateKeyAsyncTests
 {
 
   /// <summary>
-  /// Tests that the <see cref="AgeCLI.AddKeyAsync(bool, CancellationToken)"/> method returns a zero exit code and an age key.
+  /// Tests that the <see cref="AgeKeygenCLI.AddKeyAsync(bool, CancellationToken)"/> method returns a zero exit code and an age key.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task AddKeyAsync_ShouldReturnZeroExitCodeAndAgeKey()
+  public async Task AddKeyAsync_ShouldReturnsAgeKey()
   {
     // Act
-    var (exitCode, key) = await AgeCLI.AddKeyAsync();
+    string key = await AgeKeygenCLI.AddKeyAsync();
 
     // Assert
-    Assert.Equal(0, exitCode);
     Assert.DoesNotContain("Public key:", key);
     Assert.Contains("# created:", key);
     Assert.Contains("# public key:", key);
@@ -25,19 +24,18 @@ public class GenerateKeyAsyncTests
   }
 
   /// <summary>
-  /// Tests that the <see cref="AgeCLI.AddKeyAsync(bool, CancellationToken)"/> method returns a zero exit code and an age key when adding the key to the sops age key file.
+  /// Tests that the <see cref="AgeKeygenCLI.AddKeyAsync(bool, CancellationToken)"/> method returns a zero exit code and an age key when adding the key to the sops age key file.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task AddKeyAsync_ShouldReturnZeroExitCodeAndAgeKey_WhenAddingKeyToSopsAgeKeyFile()
+  public async Task AddKeyAsync_GivenBooleanToAddKeyToSopsAgeKeyFile_ShouldRAgeKeyAndAddsKeyToSopsAgeKeyFile()
   {
     // Act
-    var (exitCode, key) = await AgeCLI.AddKeyAsync(addToSopsAgeKeyFile: true);
-    string sopsAgeKeyFileContents = await AgeCLI.ShowSopsAgeKeyFileAsync();
+    string key = await AgeKeygenCLI.AddKeyAsync(addToSopsAgeKeyFile: true);
+    string sopsAgeKeyFileContents = await AgeKeygenCLI.ShowSopsAgeKeyFileAsync();
 
 
     // Assert
-    Assert.Equal(0, exitCode);
     Assert.DoesNotContain("Public key:", key);
     Assert.Contains("# created:", key);
     Assert.Contains("# public key:", key);
@@ -45,8 +43,30 @@ public class GenerateKeyAsyncTests
     Assert.Contains(key, sopsAgeKeyFileContents);
 
     // Cleanup
-    await AgeCLI.RemoveKeyAsync(key, removeFromSopsAgeKeyFile: true);
-    sopsAgeKeyFileContents = await AgeCLI.ShowSopsAgeKeyFileAsync();
+    await AgeKeygenCLI.RemoveKeyAsync(key, removeFromSopsAgeKeyFile: true);
+    sopsAgeKeyFileContents = await AgeKeygenCLI.ShowSopsAgeKeyFileAsync();
     Assert.DoesNotContain(key, sopsAgeKeyFileContents);
+  }
+
+  /// <summary>
+  /// Tests that the <see cref="AgeKeygenCLI.AddKeyAsync(string, bool, bool, CancellationToken)"/> method returns a zero exit code and writes the key to the specified file.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task AddKeyAsync_GivenValidPath_ShouldWriteKeyToFile()
+  {
+    // Act
+    await AgeKeygenCLI.AddKeyAsync("keys.txt", shouldOverwrite: false, addToSopsAgeKeyFile: false, default);
+    string keyContents = await AgeKeygenCLI.ShowKeyAsync("keys.txt");
+
+    // Assert
+    Assert.DoesNotContain("Public key:", keyContents);
+    Assert.Contains("# created:", keyContents);
+    Assert.Contains("# public key:", keyContents);
+    Assert.Contains("AGE-SECRET-KEY-", keyContents);
+
+    // Cleanup
+    await AgeKeygenCLI.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: false, default);
+    Assert.False(File.Exists("keys.txt"));
   }
 }

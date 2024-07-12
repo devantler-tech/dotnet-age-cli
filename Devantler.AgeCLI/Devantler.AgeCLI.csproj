@@ -7,11 +7,11 @@
     <AnalysisLevel>preview-recommended</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>1.0.0</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devantler.CLIRunner" Version="1.0.2" />
+    <PackageReference Include="Devantler.CLIRunner" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,5 +19,6 @@
     <Content Include="assets/binaries/*darwin-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="assets/binaries/*linux-amd64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="assets/binaries/*linux-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="assets/binaries/*windows-amd64.exe" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

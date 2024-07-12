@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 
+namespace Devantler.AgeCLI;
+
 static class SopsAgeKeyFileWriter
 {
   internal static async Task AddKeyAsync(string key, CancellationToken token = default)
@@ -34,27 +36,27 @@ static class SopsAgeKeyFileWriter
     string sopsAgeKeyFile = Environment.GetEnvironmentVariable("SOPS_AGE_KEY_FILE") ?? "";
     if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile))
     {
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
     {
       sopsAgeKeyFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/Library/Application Support/sops/age/keys.txt";
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
     {
       string xdgConfigHome = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME") ?? $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/.config";
       sopsAgeKeyFile = $"{xdgConfigHome}/sops/age/keys.txt";
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
     {
       sopsAgeKeyFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/sops/age/keys.txt";
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
   }
 
-  static async Task RemoveKeyFromFileAsync(string sopsAgeKeyFile, string key, CancellationToken token)
+  static async Task RemoveKeyAsync(string sopsAgeKeyFile, string key, CancellationToken token)
   {
     if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile) && File.Exists(sopsAgeKeyFile))
     {
@@ -65,6 +67,31 @@ static class SopsAgeKeyFileWriter
         await File.WriteAllTextAsync(sopsAgeKeyFile, fileContents, token);
       }
     }
+  }
+
+  internal static async Task<string> ReadFileAsync(CancellationToken token = default)
+  {
+    string sopsAgeKeyFileContents = "";
+    string sopsAgeKeyFile = Environment.GetEnvironmentVariable("SOPS_AGE_KEY_FILE") ?? "";
+    if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile))
+    {
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync(sopsAgeKeyFile, token);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+    {
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/Library/Application Support/sops/age/keys.txt", token);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+    {
+      string xdgConfigHome = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME") ?? $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/.config";
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync($"{xdgConfigHome}/sops/age/keys.txt", token);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/sops/age/keys.txt", token);
+    }
+
+    return sopsAgeKeyFileContents;
   }
 
   static async Task WriteKeyAsync(string sopsAgeKeyFile, string key, CancellationToken token)
