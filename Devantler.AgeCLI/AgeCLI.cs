@@ -15,13 +15,13 @@ public static partial class AgeCLI
   {
     get
     {
-      string binary = (Environment.OSVersion.Platform, RuntimeInformation.ProcessArchitecture, RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) switch
+      string binary = (Environment.OSVersion.Platform, RuntimeInformation.ProcessArchitecture, RuntimeInformation.RuntimeIdentifier) switch
       {
-        (PlatformID.Unix, Architecture.X64, true) => "age-keygen-darwin-amd64",
-        (PlatformID.Unix, Architecture.Arm64, true) => "age-keygen-darwin-arm64",
-        (PlatformID.Unix, Architecture.X64, false) => "age-keygen-linux-amd64",
-        (PlatformID.Unix, Architecture.Arm64, false) => "age-keygen-linux-arm64",
-        (PlatformID.Win32NT, Architecture.X64, _) => "age-keygen-windows-amd64.exe",
+        (PlatformID.Unix, Architecture.X64, "osx-x64") => "age-keygen-darwin-amd64",
+        (PlatformID.Unix, Architecture.Arm64, "osx-arm64") => "age-keygen-darwin-arm64",
+        (PlatformID.Unix, Architecture.X64, "linux-x64") => "age-keygen-linux-amd64",
+        (PlatformID.Unix, Architecture.Arm64, "linux-arm64") => "age-keygen-linux-arm64",
+        (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-amd64.exe",
         _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
       };
       return Cli.Wrap($"{AppContext.BaseDirectory}assets/binaries/{binary}");
