@@ -4,4 +4,20 @@
 [![Test](https://github.com/devantler/dotnet-age-cli/actions/workflows/test.yaml/badge.svg)](https://github.com/devantler/dotnet-age-cli/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/devantler/dotnet-age-cli/graph/badge.svg?token=RhQPb4fE7z)](https://codecov.io/gh/devantler/dotnet-age-cli)
 
-A simple .NET library that embeds the Age CLI.
+<!-- readme-tree start -->
+```
+.
+├── .github
+│   ├── scripts
+│   └── workflows
+├── src
+│   └── Devantler.AgeCLI
+│       └── assets
+│           └── binaries
+└── tests
+    └── Devantler.AgeCLI.Tests.Unit
+        └── AgeKeyTests
+
+10 directories
+```
+<!-- readme-tree end -->
