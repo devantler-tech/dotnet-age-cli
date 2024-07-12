@@ -25,6 +25,8 @@
 
 </details>
 
+A simple .NET library that embeds the Age CLI.
+
 ## 🚀 Getting Started
 
 To get started, you can install the package from NuGet.
