@@ -34,19 +34,19 @@ public static partial class AgeCLI
   /// <param name="addToSopsAgeKeyFile">Whether to add the key to the sops age key file.</param>
   /// <param name="token">The cancellation token.</param>
   /// <returns>A tuple containing the exit code and the key.</returns>
-  public static async Task<(int, string)> AddKeyAsync(bool addToSopsAgeKeyFile = false, CancellationToken token = default)
+  public static async Task<string> AddKeyAsync(bool addToSopsAgeKeyFile = false, CancellationToken token = default)
   {
-    var (exitCode, key) = await CLIRunner.CLIRunner.RunAsync(AgeKeygen, token, silent: false);
-    key = PublicKeyRegex().Replace(key, string.Empty);
+    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(AgeKeygen, token, silent: false);
     if (exitCode != 0)
     {
-      return (exitCode, key);
+      throw new AgeCLIException($"Failed to generate key: {message}");
     }
+    string key = PublicKeyRegex().Replace(message, string.Empty);
     if (addToSopsAgeKeyFile)
     {
       await SopsAgeKeyFileWriter.AddKeyAsync(key, token);
     }
-    return (exitCode, key);
+    return key;
   }
 
   /// <summary>
@@ -57,24 +57,23 @@ public static partial class AgeCLI
   /// <param name="addToSopsAgeKeyFile">Whether to add the key to the sops age key file.</param>
   /// <param name="token">The cancellation token.</param>
   /// <returns>An integer representing the exit code.</returns>
-  public static async Task<int> AddKeyAsync(string path, bool shouldOverwrite = false, bool addToSopsAgeKeyFile = false, CancellationToken token = default)
+  public static async Task AddKeyAsync(string path, bool shouldOverwrite = false, bool addToSopsAgeKeyFile = false, CancellationToken token = default)
   {
     var cmd = AgeKeygen.WithArguments(["-o", path]);
     if (File.Exists(path) && shouldOverwrite)
     {
       File.Delete(path);
     }
-    var (exitCode, key) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false);
-    key = PublicKeyRegex().Replace(key, string.Empty);
+    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false);
     if (exitCode != 0)
     {
-      return exitCode;
+      throw new AgeCLIException($"Failed to generate key: {message}");
     }
+    string key = PublicKeyRegex().Replace(message, string.Empty);
     if (addToSopsAgeKeyFile)
     {
       await SopsAgeKeyFileWriter.AddKeyAsync(key, token);
     }
-    return exitCode;
   }
 
   /// <summary>
@@ -101,15 +100,14 @@ public static partial class AgeCLI
   /// <param name="path">The path to the key file.</param>
   /// <param name="token">The cancellation token.</param>
   /// <returns></returns>
-  public static async Task<(int, string)> ShowKeyAsync(string path, CancellationToken token = default)
+  public static async Task<string> ShowKeyAsync(string path, CancellationToken token = default)
   {
     if (!File.Exists(path))
     {
-      string result = $"Key '{path}' not found";
-      return (1, result);
+      throw new FileNotFoundException($"The file {path} does not exist.");
     }
     string key = await File.ReadAllTextAsync(path, token);
-    return (0, key);
+    return key;
   }
 
   /// <summary>
