@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 namespace Devantler.AgeCLI;
 
 /// <summary>
-/// A class to run age CLI commands.
+/// A class to run age-keygen CLI commands.
 /// </summary>
-public static partial class AgeCLI
+public static partial class AgeKeygenCLI
 {
   [GeneratedRegex(@"^Public key:.*(\r\n|\r|\n)", RegexOptions.Multiline)]
   private static partial Regex PublicKeyRegex();
