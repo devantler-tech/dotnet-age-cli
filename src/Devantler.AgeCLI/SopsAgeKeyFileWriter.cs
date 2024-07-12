@@ -78,7 +78,7 @@ static class SopsAgeKeyFileWriter
       }
       if (!File.Exists(sopsAgeKeyFile))
       {
-        _ = File.Create(sopsAgeKeyFile);
+        using var fs = File.Create(sopsAgeKeyFile);
       }
       string fileContents = await File.ReadAllTextAsync(sopsAgeKeyFile, token);
       if (!fileContents.Contains(key))
