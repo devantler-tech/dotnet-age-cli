@@ -117,5 +117,5 @@ public static partial class AgeCLI
   /// <param name="token"></param>
   /// <returns></returns>
   public static async Task<string> ShowSopsAgeKeyFileAsync(CancellationToken token = default) =>
-    await SopsAgeKeyFileWriter.ReadSopsAgeKeyFileAsync(token);
+    await SopsAgeKeyFileWriter.ReadFileAsync(token);
 }

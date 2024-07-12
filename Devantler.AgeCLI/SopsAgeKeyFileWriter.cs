@@ -36,27 +36,40 @@ static class SopsAgeKeyFileWriter
     string sopsAgeKeyFile = Environment.GetEnvironmentVariable("SOPS_AGE_KEY_FILE") ?? "";
     if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile))
     {
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
     {
       sopsAgeKeyFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/Library/Application Support/sops/age/keys.txt";
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
     {
       string xdgConfigHome = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME") ?? $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/.config";
       sopsAgeKeyFile = $"{xdgConfigHome}/sops/age/keys.txt";
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
     {
       sopsAgeKeyFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/sops/age/keys.txt";
-      await RemoveKeyFromFileAsync(sopsAgeKeyFile, key, token);
+      await RemoveKeyAsync(sopsAgeKeyFile, key, token);
     }
   }
 
-  internal static async Task<string> ReadSopsAgeKeyFileAsync(CancellationToken token = default)
+  static async Task RemoveKeyAsync(string sopsAgeKeyFile, string key, CancellationToken token)
+  {
+    if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile) && File.Exists(sopsAgeKeyFile))
+    {
+      string fileContents = await File.ReadAllTextAsync(sopsAgeKeyFile, token);
+      if (fileContents.Contains(key))
+      {
+        fileContents = fileContents.Replace(key, "");
+        await File.WriteAllTextAsync(sopsAgeKeyFile, fileContents, token);
+      }
+    }
+  }
+
+  internal static async Task<string> ReadFileAsync(CancellationToken token = default)
   {
     string sopsAgeKeyFileContents = "";
     string sopsAgeKeyFile = Environment.GetEnvironmentVariable("SOPS_AGE_KEY_FILE") ?? "";
@@ -79,19 +92,6 @@ static class SopsAgeKeyFileWriter
     }
 
     return sopsAgeKeyFileContents;
-  }
-
-  static async Task RemoveKeyFromFileAsync(string sopsAgeKeyFile, string key, CancellationToken token)
-  {
-    if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile) && File.Exists(sopsAgeKeyFile))
-    {
-      string fileContents = await File.ReadAllTextAsync(sopsAgeKeyFile, token);
-      if (fileContents.Contains(key))
-      {
-        fileContents = fileContents.Replace(key, "");
-        await File.WriteAllTextAsync(sopsAgeKeyFile, fileContents, token);
-      }
-    }
   }
 
   static async Task WriteKeyAsync(string sopsAgeKeyFile, string key, CancellationToken token)
