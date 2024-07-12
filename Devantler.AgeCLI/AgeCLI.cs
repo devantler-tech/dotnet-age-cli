@@ -11,6 +11,7 @@ public static partial class AgeCLI
 {
   [GeneratedRegex(@"^Public key:.*(\r\n|\r|\n)", RegexOptions.Multiline)]
   private static partial Regex PublicKeyRegex();
+
   static Command AgeKeygen
   {
     get
