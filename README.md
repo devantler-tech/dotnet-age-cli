@@ -10,14 +10,12 @@
 ├── .github
 │   ├── scripts
 │   └── workflows
-├── src
-│   └── Devantler.AgeCLI
-│       └── assets
-│           └── binaries
-└── tests
-    └── Devantler.AgeCLI.Tests.Unit
-        └── AgeKeyTests
+├── Devantler.AgeCLI
+│   └── assets
+│       └── binaries
+└── Devantler.AgeCLI.Tests
+    └── AgeKeyTests
 
-10 directories
+8 directories
 ```
 <!-- readme-tree end -->
