@@ -25,7 +25,7 @@ public static partial class AgeCLI
         (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-amd64.exe",
         _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
       };
-      return Cli.Wrap($"{AppContext.BaseDirectory}assets/binaries/{binary}");
+      return Cli.Wrap($"{AppContext.BaseDirectory}assets\\binaries\\{binary}");
     }
   }
 
