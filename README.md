@@ -32,7 +32,7 @@
 To get started, you can install the package from NuGet.
 
 ```bash
-dotnet add package Devantler.TemplateEngine
+dotnet add package Devantler.AgeCLI
 ```
 
 ## 📝 Usage
