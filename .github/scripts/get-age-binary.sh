@@ -15,7 +15,9 @@ get() {
   elif [ "$isTar" = false ]; then
     curl -LJ "$url" -o "$target_dir/$target_name"
   fi
-  chmod +x "$target_dir/$target_name"
+  if [ "${target_name: -4}" != ".exe" ]; then
+    chmod +x "$target_dir/$target_name"
+  fi
 }
 
 get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-darwin-amd64" true
