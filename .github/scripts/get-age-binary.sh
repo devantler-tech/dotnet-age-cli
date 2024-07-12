@@ -21,5 +21,6 @@ get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "D
 get "https://getbin.io/FiloSottile/age?os=darwin&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-darwin-arm64" true
 get "https://getbin.io/FiloSottile/age?os=linux&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-linux-amd64" true
 get "https://getbin.io/FiloSottile/age?os=linux&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-linux-arm64" true
-curl -s "https://api.github.com/repos/FiloSottile/age/releases" | grep "browser_download.*windows-amd64.zip" | cut -d '"' -f 4 | sort -V | tail -n 2 | head -1 | xargs curl -LJ | unzip -p - "age/age-keygen.exe" >"Devantler.AgeCLI/assets/binaries/age-keygen-windows-amd64.exe"
+curl -s "https://api.github.com/repos/FiloSottile/age/releases" | grep "browser_download.*windows-amd64.zip" | cut -d '"' -f 4 | sort -V | tail -n 2 | head -1 | xargs curl -LJ | bsdtar -xvf - -C Devantler.AgeCLI/assets/binaries age/age-keygen.exe
+mv Devantler.AgeCLI/assets/binaries/age/age-keygen.exe Devantler.AgeCLI/assets/binaries/age-keygen-windows-amd64.exe
 rm -rf Devantler.AgeCLI/assets/binaries/age
