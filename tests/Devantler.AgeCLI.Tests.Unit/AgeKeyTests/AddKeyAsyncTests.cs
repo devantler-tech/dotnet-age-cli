@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace Devantler.AgeCLI.Tests.Unit.AgeKeyTests;
 
 /// <summary>
