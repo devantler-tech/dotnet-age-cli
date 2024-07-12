@@ -111,6 +111,11 @@ public static partial class AgeCLI
     return (0, key);
   }
 
+  /// <summary>
+  /// Show the sops age key file.
+  /// </summary>
+  /// <param name="token"></param>
+  /// <returns></returns>
   public static async Task<string> ShowSopsAgeKeyFileAsync(CancellationToken token = default)
   {
     string sopsAgeKeyFileContents = "";
