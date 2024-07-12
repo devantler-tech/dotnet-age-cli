@@ -18,8 +18,8 @@ get() {
   chmod +x "$target_dir/$target_name"
 }
 
-get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "src/Devantler.AgeCLI/assets/binaries" "age-keygen-darwin-amd64" true
-get "https://getbin.io/FiloSottile/age?os=darwin&arch=arm64" "age/age-keygen" "src/Devantler.AgeCLI/assets/binaries" "age-keygen-darwin-arm64" true
-get "https://getbin.io/FiloSottile/age?os=linux&arch=amd64" "age/age-keygen" "src/Devantler.AgeCLI/assets/binaries" "age-keygen-linux-amd64" true
-get "https://getbin.io/FiloSottile/age?os=linux&arch=arm64" "age/age-keygen" "src/Devantler.AgeCLI/assets/binaries" "age-keygen-linux-arm64" true
+get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-darwin-amd64" true
+get "https://getbin.io/FiloSottile/age?os=darwin&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-darwin-arm64" true
+get "https://getbin.io/FiloSottile/age?os=linux&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-linux-amd64" true
+get "https://getbin.io/FiloSottile/age?os=linux&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/assets/binaries" "age-keygen-linux-arm64" true
 rm -rf src/Devantler.AgeCLI/assets/binaries/age
