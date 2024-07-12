@@ -1,4 +1,4 @@
-namespace Devantler.AgeCLI.Tests.Unit.AgeKeyTests;
+namespace Devantler.AgeCLI.Tests.AgeKeyTests;
 
 /// <summary>
 /// Tests for the <see cref="AgeCLI.AddKeyAsync(bool, CancellationToken)"/> method and the <see cref="AgeCLI.AddKeyAsync(string, bool, bool, CancellationToken)"/> method.

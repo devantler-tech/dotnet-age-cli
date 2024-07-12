@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 
+namespace Devantler.AgeCLI;
+
 static class SopsAgeKeyFileWriter
 {
   internal static async Task AddKeyAsync(string key, CancellationToken token = default)
