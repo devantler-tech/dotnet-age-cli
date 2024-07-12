@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace Devantler.AgeCLI.Tests.Unit.AgeKeyTests;
 
 /// <summary>
@@ -33,6 +35,8 @@ public class GenerateKeyAsyncTests
   {
     // Act
     var (exitCode, key) = await AgeCLI.AddKeyAsync(addToSopsAgeKeyFile: true);
+    string sopsAgeKeyFileContents = await AgeCLI.ShowSopsAgeKeyFileAsync();
+
 
     // Assert
     Assert.Equal(0, exitCode);
@@ -40,8 +44,11 @@ public class GenerateKeyAsyncTests
     Assert.Contains("# created:", key);
     Assert.Contains("# public key:", key);
     Assert.Contains("AGE-SECRET-KEY-", key);
+    Assert.Contains(key, sopsAgeKeyFileContents);
 
     // Cleanup
-    _ = await AgeCLI.RemoveKeyAsync(key, removeFromSopsAgeKeyFile: true);
+    await AgeCLI.RemoveKeyAsync(key, removeFromSopsAgeKeyFile: true);
+    sopsAgeKeyFileContents = await AgeCLI.ShowSopsAgeKeyFileAsync();
+    Assert.DoesNotContain(key, sopsAgeKeyFileContents);
   }
 }

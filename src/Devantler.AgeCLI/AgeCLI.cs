@@ -82,7 +82,7 @@ public static partial class AgeCLI
   /// <param name="key">The key to remove.</param>
   /// <param name="removeFromSopsAgeKeyFile">Whether to remove the key from the sops age key file.</param>
   /// <param name="token">The cancellation token.</param>
-  public static async Task<int> RemoveKeyAsync(string key, bool removeFromSopsAgeKeyFile = false, CancellationToken token = default)
+  public static async Task RemoveKeyAsync(string key, bool removeFromSopsAgeKeyFile = false, CancellationToken token = default)
   {
     if (File.Exists(key))
     {
@@ -92,7 +92,6 @@ public static partial class AgeCLI
     {
       await SopsAgeKeyFileWriter.RemoveKeyAsync(key, token);
     }
-    return 0;
   }
 
   /// <summary>
@@ -110,5 +109,30 @@ public static partial class AgeCLI
     }
     string key = await File.ReadAllTextAsync(path, token);
     return (0, key);
+  }
+
+  public static async Task<string> ShowSopsAgeKeyFileAsync(CancellationToken token = default)
+  {
+    string sopsAgeKeyFileContents = "";
+    string sopsAgeKeyFile = Environment.GetEnvironmentVariable("SOPS_AGE_KEY_FILE") ?? "";
+    if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile))
+    {
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync(sopsAgeKeyFile, token);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+    {
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/Library/Application Support/sops/age/keys.txt", token);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+    {
+      string xdgConfigHome = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME") ?? $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/.config";
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync($"{xdgConfigHome}/sops/age/keys.txt", token);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+      sopsAgeKeyFileContents = await File.ReadAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/sops/age/keys.txt", token);
+    }
+
+    return sopsAgeKeyFileContents;
   }
 }
