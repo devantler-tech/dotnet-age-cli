@@ -39,6 +39,9 @@ dotnet add package Devantler.AgeCLI
 
 ## 📝 Usage
 
+> [!NOTE]
+> The library currently only supports the `age-keygen` binary commands, and the `age` binary commands are yet to be implemented.
+
 You can generate an Age key in-memory or save it to a file.
 
 ```csharp
