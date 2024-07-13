@@ -34,7 +34,6 @@ public class GenerateKeyAsyncTests
     string key = await AgeKeygenCLI.AddKeyAsync(addToSopsAgeKeyFile: true);
     string sopsAgeKeyFileContents = await AgeKeygenCLI.ShowSopsAgeKeyFileAsync();
 
-
     // Assert
     Assert.DoesNotContain("Public key:", key);
     Assert.Contains("# created:", key);
@@ -43,7 +42,7 @@ public class GenerateKeyAsyncTests
     Assert.Contains(key, sopsAgeKeyFileContents);
 
     // Cleanup
-    await AgeKeygenCLI.RemoveKeyAsync(key, removeFromSopsAgeKeyFile: true);
+    await AgeKeygenCLI.RemoveKeyFromSopsAgeKeyFileAsync(key);
     sopsAgeKeyFileContents = await AgeKeygenCLI.ShowSopsAgeKeyFileAsync();
     Assert.DoesNotContain(key, sopsAgeKeyFileContents);
   }
