@@ -65,12 +65,12 @@ public static partial class AgeKeygenCLI
     {
       File.Delete(path);
     }
-    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false);
+    var (exitCode, _) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false);
     if (exitCode != 0)
     {
-      throw new AgeCLIException($"Failed to generate key: {message}");
+      throw new AgeCLIException($"Failed to generate key and save it to {path}.");
     }
-    string key = PublicKeyRegex().Replace(message, string.Empty);
+    string key = await ShowKeyAsync(path, token);
     if (addToSopsAgeKeyFile)
     {
       await SopsAgeKeyFileWriter.AddKeyAsync(key, token);
@@ -85,13 +85,14 @@ public static partial class AgeKeygenCLI
   /// <param name="token">The cancellation token.</param>
   public static async Task RemoveKeyAsync(string key, bool removeFromSopsAgeKeyFile = false, CancellationToken token = default)
   {
+    string keyContents = await ShowKeyAsync(key, token);
     if (File.Exists(key))
     {
       File.Delete(key);
     }
     if (removeFromSopsAgeKeyFile)
     {
-      await SopsAgeKeyFileWriter.RemoveKeyAsync(key, token);
+      await SopsAgeKeyFileWriter.RemoveKeyAsync(keyContents, token);
     }
   }
 
