@@ -69,7 +69,7 @@ await AgeKeygenCLI.RemoveKeyAsync("keys.txt");
 await AgeKeygenCLI.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: true);
 
 // Remove key from SOPS Age key file.
-var key = """
+string key = """
   # created: 2024-07-13T11:03:46+02:00
   # public key: age1yfe7n00tmz280uwvm09qfx8vyg4y7m63e49n5hy5ra8a3dqdgdgszw8tdz
   AGE-SECRET-KEY-1YA0R28P2TM7AWYHA9UL839ZMX30VE2PCEGRJKK2SD6YGFQWVHCTSE3S7NC
