@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: ⚙️ Install bsdtar
+        run: sudo apt-get install -y bsdtar
       - name: ⤵️ Get Age binary
         run: |
           ./.github/scripts/get-age-binary.sh
