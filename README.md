@@ -17,7 +17,7 @@
 │   └── assets
 │       └── binaries
 └── Devantler.AgeCLI.Tests
-    └── AgeKeyTests
+    └── AgeKeygenTests
 
 8 directories
 ```
