@@ -72,7 +72,6 @@ public class GenerateKeyAsyncTests
   /// <summary>
   /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method writes an age key to the specified file, and adds the key to the sops age key file.
   /// </summary>
-  /// <returns></returns>
   [Fact]
   public async Task AddKeyAsync_GivenValidPathAndBooleanToAddKeyToSopsAgeKeyFile_ShouldWriteKeyToFileAndAddKeyToSopsAgeKeyFile()
   {
@@ -93,5 +92,35 @@ public class GenerateKeyAsyncTests
     Assert.False(File.Exists("keys.txt"));
     sopsAgeKeyFileContents = await AgeKeygen.ShowSopsAgeKeyFileAsync();
     Assert.DoesNotContain(keyContents, sopsAgeKeyFileContents);
+  }
+
+  /// <summary>
+  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method overwrites an existing key when the <paramref name="shouldOverwrite"/> parameter is set to <c>true</c>.
+  /// </summary>
+  [Fact]
+  public async Task AddKeyAsync_GivenValidPathAndBooleanToOverwrite_ShouldOverwriteExistingKey()
+  {
+    // Arrange
+    await AgeKeygen.AddKeyAsync("keys.txt", shouldOverwrite: true);
+    string keyContents = await AgeKeygen.ShowKeyAsync("keys.txt");
+
+    // Act
+    await AgeKeygen.AddKeyAsync("keys.txt", shouldOverwrite: true);
+    string newKeyContents = await AgeKeygen.ShowKeyAsync("keys.txt");
+
+    // Assert
+    Assert.DoesNotContain("Public key:", keyContents);
+    Assert.Contains("# created:", keyContents);
+    Assert.Contains("# public key:", keyContents);
+    Assert.Contains("AGE-SECRET-KEY-", keyContents);
+    Assert.DoesNotContain("Public key:", newKeyContents);
+    Assert.Contains("# created:", newKeyContents);
+    Assert.Contains("# public key:", newKeyContents);
+    Assert.Contains("AGE-SECRET-KEY-", newKeyContents);
+    Assert.NotEqual(keyContents, newKeyContents);
+
+    // Cleanup
+    await AgeKeygen.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: false);
+    Assert.False(File.Exists("keys.txt"));
   }
 }
