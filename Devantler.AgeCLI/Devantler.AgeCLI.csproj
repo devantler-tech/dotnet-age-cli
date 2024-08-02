@@ -21,4 +21,8 @@
     <Content Include="assets/binaries/*linux-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="assets/binaries/*windows-amd64.exe" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Devantler.AgeCLI.Tests" />
+  </ItemGroup>
 </Project>
