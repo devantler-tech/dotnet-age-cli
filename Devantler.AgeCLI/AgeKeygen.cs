@@ -7,27 +7,34 @@ namespace Devantler.AgeCLI;
 /// <summary>
 /// A class to run age-keygen CLI commands.
 /// </summary>
-public static partial class AgeKeygenCLI
+public static partial class AgeKeygen
 {
   [GeneratedRegex(@"^Public key:.*(\r\n|\r|\n)", RegexOptions.Multiline)]
   private static partial Regex PublicKeyRegex();
 
-  static Command AgeKeygen
+  /// <summary>
+  /// The age-keygen CLI command.
+  /// </summary>
+  static Command Command => GetCommand();
+
+  internal static Command GetCommand(PlatformID? platformID = default, Architecture? architecture = default, string? runtimeIdentifier = default)
   {
-    get
+    platformID ??= Environment.OSVersion.Platform;
+    architecture ??= RuntimeInformation.ProcessArchitecture;
+    runtimeIdentifier ??= RuntimeInformation.RuntimeIdentifier;
+
+    string binary = (platformID, architecture, runtimeIdentifier) switch
     {
-      string binary = (Environment.OSVersion.Platform, RuntimeInformation.ProcessArchitecture, RuntimeInformation.RuntimeIdentifier) switch
-      {
-        (PlatformID.Unix, Architecture.X64, "osx-x64") => "age-keygen-darwin-amd64",
-        (PlatformID.Unix, Architecture.Arm64, "osx-arm64") => "age-keygen-darwin-arm64",
-        (PlatformID.Unix, Architecture.X64, "linux-x64") => "age-keygen-linux-amd64",
-        (PlatformID.Unix, Architecture.Arm64, "linux-arm64") => "age-keygen-linux-arm64",
-        (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-amd64.exe",
-        _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
-      };
-      return Cli.Wrap($"{AppContext.BaseDirectory}assets{Path.DirectorySeparatorChar}binaries{Path.DirectorySeparatorChar}{binary}");
-    }
+      (PlatformID.Unix, Architecture.X64, "osx-x64") => "age-keygen-darwin-amd64",
+      (PlatformID.Unix, Architecture.Arm64, "osx-arm64") => "age-keygen-darwin-arm64",
+      (PlatformID.Unix, Architecture.X64, "linux-x64") => "age-keygen-linux-amd64",
+      (PlatformID.Unix, Architecture.Arm64, "linux-arm64") => "age-keygen-linux-arm64",
+      (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-amd64.exe",
+      _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
+    };
+    return Cli.Wrap($"{AppContext.BaseDirectory}assets{Path.DirectorySeparatorChar}binaries{Path.DirectorySeparatorChar}{binary}");
   }
+
 
   /// <summary>
   /// Add a new key in-memory.
@@ -37,7 +44,7 @@ public static partial class AgeKeygenCLI
   /// <returns>A tuple containing the exit code and the key.</returns>
   public static async Task<string> AddKeyAsync(bool addToSopsAgeKeyFile = false, CancellationToken token = default)
   {
-    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(AgeKeygen, token, silent: false);
+    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(Command, token, silent: false);
     if (exitCode != 0)
     {
       throw new AgeCLIException($"Failed to generate key: {message}");
@@ -60,7 +67,7 @@ public static partial class AgeKeygenCLI
   /// <returns>An integer representing the exit code.</returns>
   public static async Task AddKeyAsync(string keyPath, bool shouldOverwrite = false, bool addToSopsAgeKeyFile = false, CancellationToken token = default)
   {
-    var cmd = AgeKeygen.WithArguments(["-o", keyPath]);
+    var cmd = Command.WithArguments(["-o", keyPath]);
     if (File.Exists(keyPath) && shouldOverwrite)
     {
       File.Delete(keyPath);
