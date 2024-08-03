@@ -42,20 +42,8 @@ public static partial class AgeKeygen
   /// <param name="addToSopsAgeKeyFile">Whether to add the key to the sops age key file.</param>
   /// <param name="token">The cancellation token.</param>
   /// <returns>A tuple containing the exit code and the key.</returns>
-  public static async Task<string> AddKeyAsync(bool addToSopsAgeKeyFile = false, CancellationToken token = default)
-  {
-    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(Command, token, silent: false).ConfigureAwait(false);
-    if (exitCode != 0)
-    {
-      throw new AgeException($"Failed to generate key: {message}");
-    }
-    string key = PublicKeyRegex().Replace(message, string.Empty);
-    if (addToSopsAgeKeyFile)
-    {
-      await SopsAgeKeyFileWriter.AddKeyAsync(key, token).ConfigureAwait(false);
-    }
-    return key;
-  }
+  public static async Task<string> AddKeyAsync(bool addToSopsAgeKeyFile = false, CancellationToken token = default) =>
+    await AddKeyAsync(Command, addToSopsAgeKeyFile: addToSopsAgeKeyFile, token: token).ConfigureAwait(false);
 
   /// <summary>
   /// Add a new key and save it to a file.
@@ -72,16 +60,32 @@ public static partial class AgeKeygen
     {
       File.Delete(keyPath);
     }
-    var (exitCode, _) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false).ConfigureAwait(false);
+    _ = await AddKeyAsync(cmd, keyPath, addToSopsAgeKeyFile, token).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  /// Add a new key in-memory.
+  /// </summary>
+  /// <param name="cmd"></param>
+  /// <param name="keyPath"></param>
+  /// <param name="addToSopsAgeKeyFile">Whether to add the key to the sops age key file.</param>
+  /// <param name="token">The cancellation token.</param>
+  /// <returns>A tuple containing the exit code and the key.</returns>
+  public static async Task<string> AddKeyAsync(Command cmd, string keyPath = "", bool addToSopsAgeKeyFile = false, CancellationToken token = default)
+  {
+    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false).ConfigureAwait(false);
     if (exitCode != 0)
     {
-      throw new AgeException($"Failed to generate key and save it to {keyPath}.");
+      throw new AgeException($"Failed to generate key: {message}");
     }
-    string key = await ShowKeyAsync(keyPath, token).ConfigureAwait(false);
+    string key = !string.IsNullOrEmpty(keyPath) ?
+      await ShowKeyAsync(keyPath, token).ConfigureAwait(false) :
+      PublicKeyRegex().Replace(message, string.Empty);
     if (addToSopsAgeKeyFile)
     {
       await SopsAgeKeyFileWriter.AddKeyAsync(key, token).ConfigureAwait(false);
     }
+    return key;
   }
 
   /// <summary>
