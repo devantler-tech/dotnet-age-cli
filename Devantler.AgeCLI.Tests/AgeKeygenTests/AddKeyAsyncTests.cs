@@ -7,7 +7,7 @@ public class AddKeyAsyncTests
 {
 
   /// <summary>
-  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(bool, CancellationToken)"/> method returns an age key.
+  /// Tests that an age key is returned.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -24,7 +24,7 @@ public class AddKeyAsyncTests
   }
 
   /// <summary>
-  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(bool, CancellationToken)"/> method returns an age key and adds the key to the sops age key file.
+  /// Tests that an age key is returned and that the key is added to the sops age key file.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -48,7 +48,7 @@ public class AddKeyAsyncTests
   }
 
   /// <summary>
-  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method writes an age key to the specified file.
+  /// Tests that an age key is written to the specified file.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -70,7 +70,7 @@ public class AddKeyAsyncTests
   }
 
   /// <summary>
-  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method writes an age key to the specified file, and adds the key to the sops age key file.
+  /// Tests that an age key is written to the specified file, and that the key is added to the sops age key file.
   /// </summary>
   [Fact]
   public async Task AddKeyAsync_GivenValidPathAndBooleanToAddKeyToSopsAgeKeyFile_ShouldWriteKeyToFileAndAddKeyToSopsAgeKeyFile()
@@ -95,7 +95,7 @@ public class AddKeyAsyncTests
   }
 
   /// <summary>
-  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method overwrites an existing key when the boolean to overwrite is set to true.
+  /// Tests that an existing key is overwritten when the boolean to overwrite is set to true.
   /// </summary>
   [Fact]
   public async Task AddKeyAsync_GivenValidPathAndBooleanToOverwrite_ShouldOverwriteExistingKey()
@@ -122,5 +122,18 @@ public class AddKeyAsyncTests
     // Cleanup
     await AgeKeygen.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: false);
     Assert.False(File.Exists("keys.txt"));
+  }
+
+  /// <summary>
+  /// Tests that an <see cref="AgeException"/> is thrown when the path is invalid.
+  /// </summary>
+  [Fact]
+  public async Task AddKeyAsync_GivenInvalidPath_ShouldThrowAgeException()
+  {
+    // Act
+    static async Task Act() => await AgeKeygen.AddKeyAsync("invalid-path//keys.txt").ConfigureAwait(false);
+
+    // Assert
+    _ = await Assert.ThrowsAsync<AgeException>(Act);
   }
 }

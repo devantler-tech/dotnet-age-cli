@@ -47,7 +47,7 @@ public static partial class AgeKeygen
     var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(Command, token, silent: false).ConfigureAwait(false);
     if (exitCode != 0)
     {
-      throw new AgeCLIException($"Failed to generate key: {message}");
+      throw new AgeException($"Failed to generate key: {message}");
     }
     string key = PublicKeyRegex().Replace(message, string.Empty);
     if (addToSopsAgeKeyFile)
@@ -75,7 +75,7 @@ public static partial class AgeKeygen
     var (exitCode, _) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false).ConfigureAwait(false);
     if (exitCode != 0)
     {
-      throw new AgeCLIException($"Failed to generate key and save it to {keyPath}.");
+      throw new AgeException($"Failed to generate key and save it to {keyPath}.");
     }
     string key = await ShowKeyAsync(keyPath, token).ConfigureAwait(false);
     if (addToSopsAgeKeyFile)

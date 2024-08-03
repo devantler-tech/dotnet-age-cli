@@ -3,12 +3,12 @@ namespace Devantler.AgeCLI;
 /// <summary>
 /// An exception thrown by the AgeCLI library.
 /// </summary>
-public class AgeCLIException : Exception
+public class AgeException : Exception
 {
   /// <summary>
   /// Default constructor.
   /// </summary>
-  public AgeCLIException()
+  public AgeException()
   {
   }
 
@@ -16,7 +16,7 @@ public class AgeCLIException : Exception
   /// Constructor with message.
   /// </summary>
   /// <param name="message"></param>
-  public AgeCLIException(string message) : base(message)
+  public AgeException(string message) : base(message)
   {
   }
 
@@ -25,7 +25,7 @@ public class AgeCLIException : Exception
   /// </summary>
   /// <param name="message"></param>
   /// <param name="innerException"></param>
-  public AgeCLIException(string message, Exception innerException) : base(message, innerException)
+  public AgeException(string message, Exception innerException) : base(message, innerException)
   {
   }
 
