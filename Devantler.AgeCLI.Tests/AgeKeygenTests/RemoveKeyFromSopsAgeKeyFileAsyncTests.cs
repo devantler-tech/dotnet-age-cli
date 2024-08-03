@@ -3,6 +3,7 @@ namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 /// <summary>
 /// Tests for the <see cref="AgeKeygen.RemoveKeyFromSopsAgeKeyFileAsync(string, CancellationToken)"/> method.
 /// </summary>
+[Collection("Sequential")]
 public class RemoveKeyFromSopsAgeKeyFileTests
 {
 
@@ -26,6 +27,7 @@ public class RemoveKeyFromSopsAgeKeyFileTests
 
     // Cleanup
     Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", null);
+    // this step does not always delete the file successfully, why so?
     File.Delete(keyPath);
   }
 }

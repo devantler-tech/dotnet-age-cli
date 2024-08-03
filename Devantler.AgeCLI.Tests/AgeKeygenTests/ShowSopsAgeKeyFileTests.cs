@@ -3,6 +3,7 @@ namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 /// <summary>
 /// Tests for the <see cref="AgeKeygen.ShowSopsAgeKeyFileAsync(CancellationToken)"/> method.
 /// </summary>
+[Collection("Sequential")]
 public class ShowSopsAgeKeyFileTests
 {
 
