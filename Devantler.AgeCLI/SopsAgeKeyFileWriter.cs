@@ -99,7 +99,7 @@ static class SopsAgeKeyFileWriter
     if (!string.IsNullOrWhiteSpace(sopsAgeKeyFile))
     {
       string? directory = Path.GetDirectoryName(sopsAgeKeyFile);
-      if (directory is not null && !Directory.Exists(directory))
+      if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
       {
         _ = Directory.CreateDirectory(directory);
       }
