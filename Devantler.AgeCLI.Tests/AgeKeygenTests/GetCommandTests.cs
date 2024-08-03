@@ -2,6 +2,9 @@ using System.Runtime.InteropServices;
 
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 
+/// <summary>
+/// Tests for the <see cref="AgeKeygen.GetCommand(PlatformID?, Architecture?, string?)"/> method.
+/// </summary>
 public class GetCommandTests
 {
   /// <summary>
