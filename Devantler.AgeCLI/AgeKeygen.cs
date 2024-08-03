@@ -44,7 +44,7 @@ public static partial class AgeKeygen
   /// <returns>A tuple containing the exit code and the key.</returns>
   public static async Task<string> AddKeyAsync(bool addToSopsAgeKeyFile = false, CancellationToken token = default)
   {
-    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(Command, token, silent: false);
+    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(Command, token, silent: false).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new AgeCLIException($"Failed to generate key: {message}");
@@ -52,7 +52,7 @@ public static partial class AgeKeygen
     string key = PublicKeyRegex().Replace(message, string.Empty);
     if (addToSopsAgeKeyFile)
     {
-      await SopsAgeKeyFileWriter.AddKeyAsync(key, token);
+      await SopsAgeKeyFileWriter.AddKeyAsync(key, token).ConfigureAwait(false);
     }
     return key;
   }
@@ -72,15 +72,15 @@ public static partial class AgeKeygen
     {
       File.Delete(keyPath);
     }
-    var (exitCode, _) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false);
+    var (exitCode, _) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new AgeCLIException($"Failed to generate key and save it to {keyPath}.");
     }
-    string key = await ShowKeyAsync(keyPath, token);
+    string key = await ShowKeyAsync(keyPath, token).ConfigureAwait(false);
     if (addToSopsAgeKeyFile)
     {
-      await SopsAgeKeyFileWriter.AddKeyAsync(key, token);
+      await SopsAgeKeyFileWriter.AddKeyAsync(key, token).ConfigureAwait(false);
     }
   }
 
@@ -92,14 +92,14 @@ public static partial class AgeKeygen
   /// <param name="token">The cancellation token.</param>
   public static async Task RemoveKeyAsync(string keyPath, bool removeFromSopsAgeKeyFile = false, CancellationToken token = default)
   {
-    string keyContents = await ShowKeyAsync(keyPath, token);
+    string keyContents = await ShowKeyAsync(keyPath, token).ConfigureAwait(false);
     if (File.Exists(keyPath))
     {
       File.Delete(keyPath);
     }
     if (removeFromSopsAgeKeyFile)
     {
-      await RemoveKeyFromSopsAgeKeyFileAsync(keyContents, token);
+      await RemoveKeyFromSopsAgeKeyFileAsync(keyContents, token).ConfigureAwait(false);
     }
   }
 
@@ -110,7 +110,7 @@ public static partial class AgeKeygen
   /// <param name="token"></param>
   /// <returns></returns>
   public static async Task RemoveKeyFromSopsAgeKeyFileAsync(string key, CancellationToken token = default) =>
-    await SopsAgeKeyFileWriter.RemoveKeyAsync(key, token);
+    await SopsAgeKeyFileWriter.RemoveKeyAsync(key, token).ConfigureAwait(false);
 
   /// <summary>
   /// Show a key from a file.
@@ -124,7 +124,7 @@ public static partial class AgeKeygen
     {
       throw new FileNotFoundException($"The file {keyPath} does not exist.");
     }
-    string key = await File.ReadAllTextAsync(keyPath, token);
+    string key = await File.ReadAllTextAsync(keyPath, token).ConfigureAwait(false);
     return key;
   }
 
@@ -134,5 +134,5 @@ public static partial class AgeKeygen
   /// <param name="token"></param>
   /// <returns></returns>
   public static async Task<string> ShowSopsAgeKeyFileAsync(CancellationToken token = default) =>
-    await SopsAgeKeyFileWriter.ReadFileAsync(token);
+    await SopsAgeKeyFileWriter.ReadFileAsync(token).ConfigureAwait(false);
 }

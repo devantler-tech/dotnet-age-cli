@@ -17,10 +17,10 @@ public class GenerateKeyAsyncTests
     string key = await AgeKeygen.AddKeyAsync();
 
     // Assert
-    Assert.DoesNotContain("Public key:", key);
-    Assert.Contains("# created:", key);
-    Assert.Contains("# public key:", key);
-    Assert.Contains("AGE-SECRET-KEY-", key);
+    Assert.DoesNotContain("Public key:", key, StringComparison.Ordinal);
+    Assert.Contains("# created:", key, StringComparison.Ordinal);
+    Assert.Contains("# public key:", key, StringComparison.Ordinal);
+    Assert.Contains("AGE-SECRET-KEY-", key, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -35,16 +35,16 @@ public class GenerateKeyAsyncTests
     string sopsAgeKeyFileContents = await AgeKeygen.ShowSopsAgeKeyFileAsync();
 
     // Assert
-    Assert.DoesNotContain("Public key:", key);
-    Assert.Contains("# created:", key);
-    Assert.Contains("# public key:", key);
-    Assert.Contains("AGE-SECRET-KEY-", key);
-    Assert.Contains(key, sopsAgeKeyFileContents);
+    Assert.DoesNotContain("Public key:", key, StringComparison.Ordinal);
+    Assert.Contains("# created:", key, StringComparison.Ordinal);
+    Assert.Contains("# public key:", key, StringComparison.Ordinal);
+    Assert.Contains("AGE-SECRET-KEY-", key, StringComparison.Ordinal);
+    Assert.Contains(key, sopsAgeKeyFileContents, StringComparison.Ordinal);
 
     // Cleanup
     await AgeKeygen.RemoveKeyFromSopsAgeKeyFileAsync(key);
     sopsAgeKeyFileContents = await AgeKeygen.ShowSopsAgeKeyFileAsync();
-    Assert.DoesNotContain(key, sopsAgeKeyFileContents);
+    Assert.DoesNotContain(key, sopsAgeKeyFileContents, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -59,10 +59,10 @@ public class GenerateKeyAsyncTests
     string keyContents = await AgeKeygen.ShowKeyAsync("keys.txt");
 
     // Assert
-    Assert.DoesNotContain("Public key:", keyContents);
-    Assert.Contains("# created:", keyContents);
-    Assert.Contains("# public key:", keyContents);
-    Assert.Contains("AGE-SECRET-KEY-", keyContents);
+    Assert.DoesNotContain("Public key:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("# created:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("# public key:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("AGE-SECRET-KEY-", keyContents, StringComparison.Ordinal);
 
     // Cleanup
     await AgeKeygen.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: false);
@@ -81,17 +81,17 @@ public class GenerateKeyAsyncTests
     string sopsAgeKeyFileContents = await AgeKeygen.ShowSopsAgeKeyFileAsync();
 
     // Assert
-    Assert.DoesNotContain("Public key:", keyContents);
-    Assert.Contains("# created:", keyContents);
-    Assert.Contains("# public key:", keyContents);
-    Assert.Contains("AGE-SECRET-KEY-", keyContents);
-    Assert.Contains(keyContents, sopsAgeKeyFileContents);
+    Assert.DoesNotContain("Public key:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("# created:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("# public key:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("AGE-SECRET-KEY-", keyContents, StringComparison.Ordinal);
+    Assert.Contains(keyContents, sopsAgeKeyFileContents, StringComparison.Ordinal);
 
     // Cleanup
     await AgeKeygen.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: true);
     Assert.False(File.Exists("keys.txt"));
     sopsAgeKeyFileContents = await AgeKeygen.ShowSopsAgeKeyFileAsync();
-    Assert.DoesNotContain(keyContents, sopsAgeKeyFileContents);
+    Assert.DoesNotContain(keyContents, sopsAgeKeyFileContents, StringComparison.Ordinal);
   }
 
   /// <summary>

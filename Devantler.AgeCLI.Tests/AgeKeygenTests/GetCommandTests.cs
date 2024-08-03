@@ -54,6 +54,6 @@ public class GetCommandTests
     void Act() => AgeKeygen.GetCommand(platformID, architecture, runtimeIdentifier);
 
     // Assert
-    Assert.Throws<PlatformNotSupportedException>(Act);
+    _ = Assert.Throws<PlatformNotSupportedException>(Act);
   }
 }
