@@ -24,5 +24,6 @@ public class ShowSopsAgeKeyFileTests
 
     // Cleanup
     Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", null);
+    File.Delete("key.txt");
   }
 }
