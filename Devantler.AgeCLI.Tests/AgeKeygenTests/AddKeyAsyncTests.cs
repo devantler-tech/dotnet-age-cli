@@ -3,7 +3,7 @@ namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 /// <summary>
 /// Tests for the <see cref="AgeKeygen.AddKeyAsync(bool, CancellationToken)"/> method and the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method.
 /// </summary>
-public class GenerateKeyAsyncTests
+public class AddKeyAsyncTests
 {
 
   /// <summary>
