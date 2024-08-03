@@ -16,9 +16,9 @@ public class ShowKeyAsyncTests
     string keyPath = "non-existent-key.txt";
 
     // Act
-    async Task Act() => await AgeKeygen.ShowKeyAsync(keyPath);
+    async Task Act() => await AgeKeygen.ShowKeyAsync(keyPath, CancellationToken.None).ConfigureAwait(false);
 
     // Assert
-    await Assert.ThrowsAsync<FileNotFoundException>(Act);
+    _ = await Assert.ThrowsAsync<FileNotFoundException>(Act);
   }
 }

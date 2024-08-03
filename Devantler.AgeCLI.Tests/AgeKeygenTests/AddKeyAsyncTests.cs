@@ -95,7 +95,7 @@ public class GenerateKeyAsyncTests
   }
 
   /// <summary>
-  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method overwrites an existing key when the <paramref name="shouldOverwrite"/> parameter is set to <c>true</c>.
+  /// Tests that the <see cref="AgeKeygen.AddKeyAsync(string, bool, bool, CancellationToken)"/> method overwrites an existing key when the boolean to overwrite is set to true.
   /// </summary>
   [Fact]
   public async Task AddKeyAsync_GivenValidPathAndBooleanToOverwrite_ShouldOverwriteExistingKey()
@@ -109,14 +109,14 @@ public class GenerateKeyAsyncTests
     string newKeyContents = await AgeKeygen.ShowKeyAsync("keys.txt");
 
     // Assert
-    Assert.DoesNotContain("Public key:", keyContents);
-    Assert.Contains("# created:", keyContents);
-    Assert.Contains("# public key:", keyContents);
-    Assert.Contains("AGE-SECRET-KEY-", keyContents);
-    Assert.DoesNotContain("Public key:", newKeyContents);
-    Assert.Contains("# created:", newKeyContents);
-    Assert.Contains("# public key:", newKeyContents);
-    Assert.Contains("AGE-SECRET-KEY-", newKeyContents);
+    Assert.DoesNotContain("Public key:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("# created:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("# public key:", keyContents, StringComparison.Ordinal);
+    Assert.Contains("AGE-SECRET-KEY-", keyContents, StringComparison.Ordinal);
+    Assert.DoesNotContain("Public key:", newKeyContents, StringComparison.Ordinal);
+    Assert.Contains("# created:", newKeyContents, StringComparison.Ordinal);
+    Assert.Contains("# public key:", newKeyContents, StringComparison.Ordinal);
+    Assert.Contains("AGE-SECRET-KEY-", newKeyContents, StringComparison.Ordinal);
     Assert.NotEqual(keyContents, newKeyContents);
 
     // Cleanup

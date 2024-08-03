@@ -8,6 +8,7 @@
   <summary>Show/hide folder structure</summary>
 
 <!-- readme-tree start -->
+
 ```
 .
 ├── .github
@@ -21,6 +22,7 @@
 
 8 directories
 ```
+
 <!-- readme-tree end -->
 
 </details>
@@ -46,16 +48,16 @@ You can generate an Age key in-memory or save it to a file.
 using Devantler.AgeCLI;
 
 // Generate an Age key in-memory
-string key = await AgeKeygenCLI.AddKeyAsync();
+string key = await AgeKeygen.AddKeyAsync();
 
 // Generate an Age key in-memory and save it to your SOPS Age key file.
-string key = await AgeKeygenCLI.AddKeyAsync(addToSopsAgeKeyFile: true);
+string key = await AgeKeygen.AddKeyAsync(addToSopsAgeKeyFile: true);
 
 // Generate an Age key and save it to a file.
-await AgeKeygenCLI.AddKeyAsync("keys.txt");
+await AgeKeygen.AddKeyAsync("keys.txt");
 
 // Generate an Age key and save it to a file, and add it to your SOPS Age key file.
-await AgeKeygenCLI.AddKeyAsync("keys.txt", addToSopsAgeKeyFile: true);
+await AgeKeygen.AddKeyAsync("keys.txt", addToSopsAgeKeyFile: true);
 ```
 
 You can also remove existing Age keys.
@@ -64,10 +66,10 @@ You can also remove existing Age keys.
 using Devantler.AgeCLI;
 
 // Remove an Age key.
-await AgeKeygenCLI.RemoveKeyAsync("keys.txt");
+await AgeKeygen.RemoveKeyAsync("keys.txt");
 
 // Remove an Age key, and remove it from your SOPS Age key file.
-await AgeKeygenCLI.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: true);
+await AgeKeygen.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: true);
 
 // Remove key from SOPS Age key file.
 string key = """
@@ -75,7 +77,7 @@ string key = """
   # public key: age1yfe7n00tmz280uwvm09qfx8vyg4y7m63e49n5hy5ra8a3dqdgdgszw8tdz
   AGE-SECRET-KEY-1YA0R28P2TM7AWYHA9UL839ZMX30VE2PCEGRJKK2SD6YGFQWVHCTSE3S7NC
   """;
-await AgeKeygenCLI.RemoveKeyFromSopsAgeKeyFileAsync(key);
+await AgeKeygen.RemoveKeyFromSopsAgeKeyFileAsync(key);
 ```
 
 You can list existing Age keys.
@@ -84,8 +86,8 @@ You can list existing Age keys.
 using Devantler.AgeCLI;
 
 // Show an existing Age key.
-var key = await AgeKeygenCLI.ShowKeyAsync("keys.txt");
+var key = await AgeKeygen.ShowKeyAsync("keys.txt");
 
 // Show the SOPS Age key file.
-var keys = await AgeKeygenCLI.ShowSopsAgeKeyFileAsync();
+var keys = await AgeKeygen.ShowSopsAgeKeyFileAsync();
 ```
