@@ -13,18 +13,19 @@ public class RemoveKeyFromSopsAgeKeyFileTests
   public async Task RemoveKeyFromSopsAgeKeyFileAsync_GivenSopsAgeKeyFileEnvironmentVariable_ShouldRemoveKeyFromFile()
   {
     // Arrange
-    await File.WriteAllTextAsync("key.txt", "age1abc123");
-    Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", "key.txt");
+    string keyPath = "remove-key-from-sops-age-key-file.txt";
+    await File.WriteAllTextAsync(keyPath, "age1abc123");
+    Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", keyPath);
 
     // Act
     await AgeKeygen.RemoveKeyFromSopsAgeKeyFileAsync("age1abc123", CancellationToken.None);
 
     // Assert
-    string result = await File.ReadAllTextAsync("key.txt");
+    string result = await File.ReadAllTextAsync(keyPath);
     Assert.Equal("", result);
 
     // Cleanup
     Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", null);
-    File.Delete("key.txt");
+    File.Delete(keyPath);
   }
 }

@@ -13,8 +13,9 @@ public class ShowSopsAgeKeyFileTests
   public async Task ShowSopsAgeKeyFileAsync_GivenSopsAgeKeyFileEnvironmentVariable_ShouldReturnContentsFromFile()
   {
     // Arrange
-    await File.WriteAllTextAsync("key.txt", "age1abc123");
-    Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", "key.txt");
+    string keyPath = "show-sops-age-key-file.txt";
+    await File.WriteAllTextAsync(keyPath, "age1abc123");
+    Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", keyPath);
 
     // Act
     string result = await AgeKeygen.ShowSopsAgeKeyFileAsync(CancellationToken.None);
@@ -24,6 +25,6 @@ public class ShowSopsAgeKeyFileTests
 
     // Cleanup
     Environment.SetEnvironmentVariable("SOPS_AGE_KEY_FILE", null);
-    File.Delete("key.txt");
+    File.Delete(keyPath);
   }
 }
