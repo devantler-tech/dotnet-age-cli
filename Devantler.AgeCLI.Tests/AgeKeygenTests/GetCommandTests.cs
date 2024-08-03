@@ -11,7 +11,7 @@ public class GetCommandTests
   /// Test to verify that the command returns the correct binary for MacOS on x64 architecture.
   /// </summary>
   [Fact]
-  public void Command_ShouldReturnDarwinAmd64Binary()
+  public void GetCommand_ShouldReturnDarwinAmd64Binary()
   {
     // Arrange
     string expectedBinary = "age-keygen-darwin-amd64";
@@ -27,7 +27,7 @@ public class GetCommandTests
   /// Test to verify that the command returns the correct binary for Linux on ARM64 architecture.
   /// </summary>
   [Fact]
-  public void Command_ShouldReturnLinuxArm64Binary()
+  public void GetCommand_ShouldReturnLinuxArm64Binary()
   {
     // Arrange
     string expectedBinary = "age-keygen-linux-arm64";
@@ -43,7 +43,7 @@ public class GetCommandTests
   /// Test to verify that the command returns a <see cref="PlatformNotSupportedException"/> when the platform is not supported.
   /// </summary>
   [Fact]
-  public void Command_GivenInvaldiPlatform_ShouldThrowPlatformNotSupportedException()
+  public void GetCommand_GivenInvaldiPlatform_ShouldThrowPlatformNotSupportedException()
   {
     // Arrange
     var platformID = PlatformID.Other;
