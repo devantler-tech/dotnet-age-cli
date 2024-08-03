@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-dotnet@v4.0.0
       - name: Get version from tag
         id: version
-        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/v}
       - name: Pack
         run: dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }}
       - name: Add GitHub Packages as NuGet Source
@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-dotnet@v4.0.0
       - name: Get version from tag
         id: version
-        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/v}
       - name: Pack
         run: dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }}
       - name: Push to NuGet
