@@ -1,4 +1,5 @@
 using CliWrap;
+using Devantler.CLIRunner;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -73,7 +74,7 @@ public static partial class AgeKeygen
   /// <returns>A tuple containing the exit code and the key.</returns>
   public static async Task<string> AddKeyAsync(Command cmd, string keyPath = "", bool addToSopsAgeKeyFile = false, CancellationToken token = default)
   {
-    var (exitCode, message) = await CLIRunner.CLIRunner.RunAsync(cmd, token, silent: false).ConfigureAwait(false);
+    var (exitCode, message) = await CLI.RunAsync(cmd, token, silent: false).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new AgeException($"Failed to generate key: {message}");

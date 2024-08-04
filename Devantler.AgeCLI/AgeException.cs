@@ -1,9 +1,11 @@
+using Devantler.CLIRunner;
+
 namespace Devantler.AgeCLI;
 
 /// <summary>
 /// An exception thrown by the AgeCLI library.
 /// </summary>
-public class AgeException : Exception
+public class AgeException : CLIException
 {
   /// <summary>
   /// Default constructor.
