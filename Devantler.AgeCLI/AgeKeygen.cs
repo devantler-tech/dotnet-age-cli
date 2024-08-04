@@ -65,7 +65,7 @@ public static partial class AgeKeygen
   }
 
   /// <summary>
-  /// Add a new key in-memory.
+  /// Add a new key.
   /// </summary>
   /// <param name="cmd"></param>
   /// <param name="keyPath"></param>
@@ -116,22 +116,6 @@ public static partial class AgeKeygen
   /// <returns></returns>
   public static async Task RemoveKeyFromSopsAgeKeyFileAsync(string key, CancellationToken token = default) =>
     await SopsAgeKeyFileWriter.RemoveKeyAsync(key, token).ConfigureAwait(false);
-
-  /// <summary>
-  /// Show a key from a file.
-  /// </summary>
-  /// <param name="keyPath">The path to the key file.</param>
-  /// <param name="token">The cancellation token.</param>
-  /// <returns></returns>
-  public static async Task<string> ShowKeyAsync(string keyPath, CancellationToken token = default)
-  {
-    if (!File.Exists(keyPath))
-    {
-      throw new FileNotFoundException($"The file {keyPath} does not exist.");
-    }
-    string key = await File.ReadAllTextAsync(keyPath, token).ConfigureAwait(false);
-    return key;
-  }
 
   /// <summary>
   /// Show the sops age key file.
