@@ -19,6 +19,22 @@ public class AgeExceptionTests
   }
 
   /// <summary>
+  /// Tests the constructor with a message.
+  /// </summary>
+  [Fact]
+  public void Constructor_WithMessage_SetsMessageProperty()
+  {
+    // Arrange
+    string message = "Test message";
+
+    // Act
+    var exception = new AgeException(message);
+
+    // Assert
+    Assert.Equal(message, exception.Message);
+  }
+
+  /// <summary>
   /// Tests the constructor with a message and inner exception.
   /// </summary>
   [Fact]
