@@ -68,7 +68,7 @@ public static class AgeKeygen
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task ToFile(string path, CancellationToken token = default)
   {
-    var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), cancellationToken: token).ConfigureAwait(false);
+    var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), silent: true, cancellationToken: token).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");

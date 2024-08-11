@@ -1,4 +1,5 @@
 using System.Globalization;
+using Devantler.AgeCLI.Tests.Utils;
 using Devantler.Keys.Age;
 
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
@@ -40,7 +41,7 @@ public class ToFileTests
     Assert.NotEmpty(key.PublicKey);
     Assert.NotEmpty(key.PrivateKey);
     Assert.Contains($"""
-    # created: {key.CreatedAt.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture)}
+    # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
     # public key: {key.PublicKey}
     {key.PrivateKey}
     """, keyString, StringComparison.Ordinal);
