@@ -42,16 +42,19 @@ public static class AgeKeygen
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<AgeKey> InMemory(CancellationToken token = default)
   {
-    var (exitCode, message) = await CLI.RunAsync(Command, token).ConfigureAwait(false);
+    var (exitCode, message) = await CLI.RunAsync(Command, silent: true, includeStdErr: false, cancellationToken: token).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
     string[] lines = message.Split("\n");
+    string publicKey = lines[1].Split(" ")[3];
+    string privateKey = lines[2];
+    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
     var key = new AgeKey(
-      lines[1].Split(" ")[3],
-      lines[3],
-      DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture)
+      publicKey,
+      privateKey,
+      createdAt
     );
     return key;
   }
@@ -65,7 +68,7 @@ public static class AgeKeygen
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task ToFile(string path, CancellationToken token = default)
   {
-    var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), token).ConfigureAwait(false);
+    var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), cancellationToken: token).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
