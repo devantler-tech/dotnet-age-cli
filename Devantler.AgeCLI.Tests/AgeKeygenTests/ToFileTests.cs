@@ -1,4 +1,5 @@
 using System.Globalization;
+using Devantler.Keys.Age;
 
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 
@@ -27,7 +28,15 @@ public class ToFileTests
     // Assert
     Assert.True(File.Exists(path));
     string keyString = await File.ReadAllTextAsync(path);
-    var key = new AgeKey(path);
+    string[] lines = keyString.Split("\n");
+    string publicKey = lines[1].Split(" ")[3];
+    string privateKey = lines[2];
+    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
+    var key = new AgeKey(
+      publicKey,
+      privateKey,
+      createdAt
+    );
     Assert.Contains("# created: ", keyString, StringComparison.Ordinal);
     Assert.Contains("# public key: ", keyString, StringComparison.Ordinal);
     Assert.Contains("AGE-SECRET-KEY-", keyString, StringComparison.Ordinal);
