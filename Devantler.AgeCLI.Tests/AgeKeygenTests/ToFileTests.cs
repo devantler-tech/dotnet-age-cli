@@ -11,7 +11,6 @@ public class ToFileTests
   /// <summary>
   /// Tests that an age key is written to a file.
   /// </summary>
-  /// <returns></returns>
   [Fact]
   public async Task ToFile_ShouldWriteAgeKeyToFile()
   {
@@ -42,5 +41,21 @@ public class ToFileTests
     Assert.Contains("AGE-SECRET-KEY-", keyString, StringComparison.Ordinal);
     Assert.Contains(key.PublicKey, keyString, StringComparison.Ordinal);
     Assert.Contains(key.PrivateKey, keyString, StringComparison.Ordinal);
+  }
+
+  /// <summary>
+  /// Tests that an <see cref="InvalidOperationException"/> is thrown when the age-keygen CLI command fails.
+  /// </summary>
+  [Fact]
+  public async Task ToFile_GivenInvalidOutputPath_ShouldThrowInvalidOperationException()
+  {
+    // Arrange
+    string path = "/dev/null";
+
+    // Act
+    async Task Act() => await AgeKeygen.ToFile(path).ConfigureAwait(false);
+
+    // Assert
+    _ = await Assert.ThrowsAsync<InvalidOperationException>(Act);
   }
 }
