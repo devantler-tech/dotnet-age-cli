@@ -38,7 +38,7 @@ dotnet add package Devantler.AgeCLI
 ## 📝 Usage
 
 > [!NOTE]
-> The library currently only supports the `age-keygen` binary commands, and the `age` binary commands are yet to be implemented.
+> The library currently only supports the `age-keygen` binary commands. The `age` binary commands are yet to be implemented.
 
 You can generate an Age key in-memory or save it to a file.
 
@@ -46,46 +46,8 @@ You can generate an Age key in-memory or save it to a file.
 using Devantler.AgeCLI;
 
 // Generate an Age key in-memory
-string key = await AgeKeygen.AddKeyAsync();
-
-// Generate an Age key in-memory and save it to your SOPS Age key file.
-string key = await AgeKeygen.AddKeyAsync(addToSopsAgeKeyFile: true);
+string key = await AgeKeygen.InMemoryAsync();
 
 // Generate an Age key and save it to a file.
-await AgeKeygen.AddKeyAsync("keys.txt");
-
-// Generate an Age key and save it to a file, and add it to your SOPS Age key file.
-await AgeKeygen.AddKeyAsync("keys.txt", addToSopsAgeKeyFile: true);
-```
-
-You can also remove existing Age keys.
-
-```csharp
-using Devantler.AgeCLI;
-
-// Remove an Age key.
-await AgeKeygen.RemoveKeyAsync("keys.txt");
-
-// Remove an Age key, and remove it from your SOPS Age key file.
-await AgeKeygen.RemoveKeyAsync("keys.txt", removeFromSopsAgeKeyFile: true);
-
-// Remove key from SOPS Age key file.
-string key = """
-  # created: 2024-07-13T11:03:46+02:00
-  # public key: age1yfe7n00tmz280uwvm09qfx8vyg4y7m63e49n5hy5ra8a3dqdgdgszw8tdz
-  AGE-SECRET-KEY-1YA0R28P2TM7AWYHA9UL839ZMX30VE2PCEGRJKK2SD6YGFQWVHCTSE3S7NC
-  """;
-await AgeKeygen.RemoveKeyFromSopsAgeKeyFileAsync(key);
-```
-
-You can list existing Age keys.
-
-```csharp
-using Devantler.AgeCLI;
-
-// Show an existing Age key.
-var key = await AgeKeygen.ShowKeyAsync("keys.txt");
-
-// Show the SOPS Age key file.
-var keys = await AgeKeygen.ShowSopsAgeKeyFileAsync();
+await AgeKeygen.ToFileAsync("keys.txt");
 ```
