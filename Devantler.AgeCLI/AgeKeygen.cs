@@ -1,5 +1,6 @@
 using CliWrap;
 using Devantler.CLIRunner;
+using Devantler.Keys.Age;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -47,12 +48,11 @@ public static class AgeKeygen
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
     string[] lines = message.Split("\n");
-    var key = new AgeKey
-    {
-      CreatedAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture),
-      PublicKey = lines[2].Split(" ")[2],
-      PrivateKey = lines[3]
-    };
+    var key = new AgeKey(
+      lines[2].Split(" ")[2],
+      lines[3],
+      DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture)
+    );
     return key;
   }
 
