@@ -49,7 +49,7 @@ public static class AgeKeygen
     }
     string[] lines = message.Split("\n");
     var key = new AgeKey(
-      lines[2].Split(" ")[2],
+      lines[1].Split(" ")[3],
       lines[3],
       DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture)
     );

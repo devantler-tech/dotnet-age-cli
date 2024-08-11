@@ -36,11 +36,14 @@ public class ToFileTests
       privateKey,
       createdAt
     );
-    Assert.Contains("# created: ", keyString, StringComparison.Ordinal);
-    Assert.Contains("# public key: ", keyString, StringComparison.Ordinal);
-    Assert.Contains("AGE-SECRET-KEY-", keyString, StringComparison.Ordinal);
-    Assert.Contains(key.PublicKey, keyString, StringComparison.Ordinal);
-    Assert.Contains(key.PrivateKey, keyString, StringComparison.Ordinal);
+    Assert.NotNull(key);
+    Assert.NotEmpty(key.PublicKey);
+    Assert.NotEmpty(key.PrivateKey);
+    Assert.Contains($"""
+    # created: {key.CreatedAt.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture)}
+    # public key: {key.PublicKey}
+    {key.PrivateKey}
+    """, keyString, StringComparison.Ordinal);
   }
 
   /// <summary>
