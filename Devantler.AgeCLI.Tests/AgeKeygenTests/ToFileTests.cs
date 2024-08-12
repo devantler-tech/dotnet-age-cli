@@ -49,7 +49,7 @@ public partial class ToFileTests
         # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
         # public key: {key.PublicKey}
         {key.PrivateKey}
-        """, "\n"
+        """, "\n" // The age-keygen CLI command always uses Unix-style line endings.
       ),
       keyString,
       StringComparison.Ordinal
