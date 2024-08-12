@@ -9,7 +9,7 @@ public class AgeExceptionTests
   /// Tests the default constructor.
   /// </summary>
   [Fact]
-  public void Constructor_WithNothing_CallsDefaultConstructor()
+  public void Constructor_GivenNothing_CallsDefaultConstructor()
   {
     // Act
     var exception = new AgeException();
@@ -19,10 +19,26 @@ public class AgeExceptionTests
   }
 
   /// <summary>
+  /// Tests the constructor with a message.
+  /// </summary>
+  [Fact]
+  public void Constructor_GivenMessage_SetsMessageProperty()
+  {
+    // Arrange
+    string message = "Test message";
+
+    // Act
+    var exception = new AgeException(message);
+
+    // Assert
+    Assert.Equal(message, exception.Message);
+  }
+
+  /// <summary>
   /// Tests the constructor with a message and inner exception.
   /// </summary>
   [Fact]
-  public void Constructor_WithMessageAndInnerException_SetsMessageAndInnerExceptionProperties()
+  public void Constructor_GivenMessageAndInnerException_SetsMessageAndInnerExceptionProperties()
   {
     // Arrange
     string message = "Test message";
