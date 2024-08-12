@@ -17,9 +17,10 @@
 │   └── assets
 │       └── binaries
 └── Devantler.AgeCLI.Tests
-    └── AgeKeygenTests
+    ├── AgeKeygenTests
+    └── Utils
 
-8 directories
+9 directories
 ```
 <!-- readme-tree end -->
 
