@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Devantler.AgeCLI.Tests.Utils;
 
@@ -28,7 +29,7 @@ public partial class InMemoryTests
     Assert.NotEmpty(key.PrivateKey);
     Assert.Contains(
       NewlineRegex().Replace($"""
-        # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
+        # created: {key.CreatedAt.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture)}
         # public key: {key.PublicKey}
         {key.PrivateKey}
         """, Environment.NewLine
