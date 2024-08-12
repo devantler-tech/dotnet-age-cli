@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.RegularExpressions;
 using Devantler.AgeCLI.Tests.Utils;
 using Devantler.Keys.Age;
 
@@ -7,8 +8,11 @@ namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 /// <summary>
 /// Tests for the <see cref="AgeKeygen.ToFile"/> method.
 /// </summary>
-public class ToFileTests
+public partial class ToFileTests
 {
+  [GeneratedRegex(@"(\r\n|\r|\n)")]
+  private static partial Regex NewlineRegex();
+
   /// <summary>
   /// Tests that an age key is written to a file.
   /// </summary>
@@ -40,11 +44,16 @@ public class ToFileTests
     Assert.NotNull(key);
     Assert.NotEmpty(key.PublicKey);
     Assert.NotEmpty(key.PrivateKey);
-    Assert.Contains($"""
-    # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
-    # public key: {key.PublicKey}
-    {key.PrivateKey}
-    """, keyString, StringComparison.Ordinal);
+    Assert.Contains(
+      NewlineRegex().Replace($"""
+        # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
+        # public key: {key.PublicKey}
+        {key.PrivateKey}
+        """, Environment.NewLine
+      ),
+      keyString,
+      StringComparison.Ordinal
+    );
   }
 
   /// <summary>

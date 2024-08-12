@@ -1,12 +1,15 @@
-using System.Globalization;
+using System.Text.RegularExpressions;
+using Devantler.AgeCLI.Tests.Utils;
 
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 
 /// <summary>
 /// Tests for the <see cref="AgeKeygen.InMemory"/> method.
 /// </summary>
-public class InMemoryTests
+public partial class InMemoryTests
 {
+  [GeneratedRegex(@"(\r\n|\r|\n)")]
+  private static partial Regex NewlineRegex();
 
   /// <summary>
   /// Tests that an age key is returned.
@@ -23,10 +26,15 @@ public class InMemoryTests
     Assert.NotNull(key);
     Assert.NotEmpty(key.PublicKey);
     Assert.NotEmpty(key.PrivateKey);
-    Assert.Contains($"""
-    # created: {key.CreatedAt.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture)}
-    # public key: {key.PublicKey}
-    {key.PrivateKey}
-    """, keyString, StringComparison.Ordinal);
+    Assert.Contains(
+      NewlineRegex().Replace($"""
+        # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
+        # public key: {key.PublicKey}
+        {key.PrivateKey}
+        """, Environment.NewLine
+      ),
+      keyString,
+      StringComparison.Ordinal
+    );
   }
 }
