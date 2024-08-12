@@ -49,7 +49,7 @@ public partial class ToFileTests
         # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
         # public key: {key.PublicKey}
         {key.PrivateKey}
-        """, Environment.NewLine
+        """, "\n"
       ),
       keyString,
       StringComparison.Ordinal
