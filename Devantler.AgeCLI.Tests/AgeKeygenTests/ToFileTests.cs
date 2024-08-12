@@ -29,7 +29,7 @@ public partial class ToFileTests
     // Act
     await AgeKeygen.ToFile(path);
     string keyString = await File.ReadAllTextAsync(path);
-    string[] lines = keyString.Split(Environment.NewLine);
+    string[] lines = keyString.Split("\n");
     string publicKey = lines[1].Split(" ")[3];
     string privateKey = lines[2];
     var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
