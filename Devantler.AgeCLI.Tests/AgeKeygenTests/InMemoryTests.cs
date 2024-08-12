@@ -31,7 +31,7 @@ public partial class InMemoryTests
         # created: {key.CreatedAt.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture)}
         # public key: {key.PublicKey}
         {key.PrivateKey}
-        """, Environment.NewLine
+        """, "\n" // The age-keygen CLI command always uses Unix-style line endings.
       ),
       keyString,
       StringComparison.Ordinal
