@@ -18,7 +18,7 @@ jobs:
         run: |
           ./.github/scripts/get-age-binary.sh
       - name: ✍🏻 Create PR
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update Age binary
           title: Update Age binary
