@@ -22,6 +22,7 @@ public class ToFileTests
     var ageKey = await AgeKeygen.ToFile(path);
     string keyString = await File.ReadAllTextAsync(path);
     keyString = keyString[..^1];
+    keyString = keyString.Replace("\n", Environment.NewLine, StringComparison.InvariantCulture);
 
     // Assert
     Assert.True(File.Exists(path));
