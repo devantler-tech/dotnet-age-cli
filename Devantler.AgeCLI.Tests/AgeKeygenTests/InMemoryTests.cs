@@ -1,5 +1,5 @@
-using System.Globalization;
 using System.Text.RegularExpressions;
+using Devantler.AgeCLI.Tests.Utils;
 
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 
@@ -28,7 +28,7 @@ public partial class InMemoryTests
     Assert.NotEmpty(key.PrivateKey);
     Assert.Contains(
       NewlineRegex().Replace($"""
-        # created: {key.CreatedAt.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture)}
+        # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
         # public key: {key.PublicKey}
         {key.PrivateKey}
         """, "\n" // The age-keygen CLI command always uses Unix-style line endings.
