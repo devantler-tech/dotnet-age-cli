@@ -1,6 +1,3 @@
-using System.Text.RegularExpressions;
-using Devantler.AgeCLI.Tests.Utils;
-
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 
 /// <summary>
@@ -8,9 +5,6 @@ namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 /// </summary>
 public partial class InMemoryTests
 {
-  [GeneratedRegex(@"(\r\n|\r|\n)")]
-  private static partial Regex NewlineRegex();
-
   /// <summary>
   /// Tests that an age key is returned.
   /// </summary>
@@ -26,15 +20,6 @@ public partial class InMemoryTests
     Assert.NotNull(key);
     Assert.NotEmpty(key.PublicKey);
     Assert.NotEmpty(key.PrivateKey);
-    Assert.Contains(
-      NewlineRegex().Replace($"""
-        # created: {DateTimeFormatter.FormatDateTimeWithCustomOffset(key.CreatedAt)}
-        # public key: {key.PublicKey}
-        {key.PrivateKey}
-        """, "\n" // The age-keygen CLI command always uses Unix-style line endings.
-      ),
-      keyString,
-      StringComparison.Ordinal
-    );
+    Assert.Equal(keyString, key.ToString());
   }
 }

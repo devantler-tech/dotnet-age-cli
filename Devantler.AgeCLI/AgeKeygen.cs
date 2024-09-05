@@ -48,9 +48,9 @@ public static class AgeKeygen
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
     string[] lines = message.Split(Environment.NewLine);
+    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
     string publicKey = lines[1].Split(" ")[3];
     string privateKey = lines[2];
-    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
     var key = new AgeKey(
       publicKey,
       privateKey,
@@ -66,12 +66,22 @@ public static class AgeKeygen
   /// <param name="token"></param>
   /// <returns></returns>
   /// <exception cref="InvalidOperationException"></exception>
-  public static async Task ToFile(string path, CancellationToken token = default)
+  public static async Task<AgeKey> ToFile(string path, CancellationToken token = default)
   {
     var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), silent: true, cancellationToken: token).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
+    string key = await File.ReadAllTextAsync(path, token).ConfigureAwait(false);
+    string[] lines = key.Split(Environment.NewLine);
+    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
+    string publicKey = lines[1].Split(" ")[3];
+    string privateKey = lines[2];
+    return new AgeKey(
+      publicKey,
+      privateKey,
+      createdAt
+    );
   }
 }
