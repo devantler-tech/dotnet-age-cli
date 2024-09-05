@@ -28,7 +28,7 @@ public static class AgeKeygen
       (PlatformID.Unix, Architecture.Arm64, "osx-arm64") => "age-keygen-osx-arm64",
       (PlatformID.Unix, Architecture.X64, "linux-x64") => "age-keygen-linux-x64",
       (PlatformID.Unix, Architecture.Arm64, "linux-arm64") => "age-keygen-linux-arm64",
-      (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-x64.exe",
+      (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-win-x64.exe",
       _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
     };
     return Cli.Wrap($"{AppContext.BaseDirectory}/runtimes/{runtimeIdentifier}/native/{binary}");
