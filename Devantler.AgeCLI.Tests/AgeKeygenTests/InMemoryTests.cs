@@ -1,4 +1,3 @@
-using System.Globalization;
 using Devantler.Keys.Age.Utils;
 
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
