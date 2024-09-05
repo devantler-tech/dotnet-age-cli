@@ -8,7 +8,6 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
-    <UseCurrentRuntimeIdentifier>true</UseCurrentRuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="assets/binaries/*darwin-amd64" Pack="true" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" Condition="'$(RuntimeIdentifier)' == 'osx-x64'" />
-    <Content Include="assets/binaries/*darwin-arm64" Pack="true" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" Condition="'$(RuntimeIdentifier)' == 'osx-arm64'" />
-    <Content Include="assets/binaries/*linux-amd64" Pack="true" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" Condition="'$(RuntimeIdentifier)' == 'linux-x64'" />
-    <Content Include="assets/binaries/*linux-arm64" Pack="true" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" Condition="'$(RuntimeIdentifier)' == 'linux-arm64'" />
-    <Content Include="assets/binaries/*windows-amd64.exe" Pack="true" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
+    <Content Include="runtimes/osx-arm64/native/*" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/osx-arm64/native/" />
+    <Content Include="runtimes/osx-x64/native/*" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/osx-x64/native/" />
+    <Content Include="runtimes/linux-x64/native/*" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/linux-x64/native/" />
+    <Content Include="runtimes/linux-arm64/native/*" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/linux-arm64/native/" />
+    <Content Include="runtimes/win-x64/native/*" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-x64/native/" />
   </ItemGroup>
 
   <ItemGroup>

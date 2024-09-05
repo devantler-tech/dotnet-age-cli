@@ -24,14 +24,14 @@ public static class AgeKeygen
 
     string binary = (platformID, architecture, runtimeIdentifier) switch
     {
-      (PlatformID.Unix, Architecture.X64, "osx-x64") => "age-keygen-darwin-amd64",
-      (PlatformID.Unix, Architecture.Arm64, "osx-arm64") => "age-keygen-darwin-arm64",
-      (PlatformID.Unix, Architecture.X64, "linux-x64") => "age-keygen-linux-amd64",
+      (PlatformID.Unix, Architecture.X64, "osx-x64") => "age-keygen-osx-x64",
+      (PlatformID.Unix, Architecture.Arm64, "osx-arm64") => "age-keygen-osx-arm64",
+      (PlatformID.Unix, Architecture.X64, "linux-x64") => "age-keygen-linux-x64",
       (PlatformID.Unix, Architecture.Arm64, "linux-arm64") => "age-keygen-linux-arm64",
-      (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-amd64.exe",
+      (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-windows-x64.exe",
       _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
     };
-    return Cli.Wrap($"{AppContext.BaseDirectory}assets{Path.DirectorySeparatorChar}binaries{Path.DirectorySeparatorChar}{binary}");
+    return Cli.Wrap($"{AppContext.BaseDirectory}/runtimes/{runtimeIdentifier}/native/{binary}");
   }
 
   /// <summary>

@@ -11,16 +11,18 @@ public class GetCommandTests
   /// Test to verify that the command returns the correct binary for MacOS on x64 architecture.
   /// </summary>
   [Fact]
-  public void GetCommand_ShouldReturnDarwinAmd64Binary()
+  public void GetCommand_ShouldReturnOSXx64Binary()
   {
-    // Arrange
-    string expectedBinary = "age-keygen-darwin-amd64";
+    {
+      // Arrange
+      string expectedBinary = "age-keygen-osx-x64";
 
-    // Act
-    string actualBinary = Path.GetFileName(AgeKeygen.GetCommand(PlatformID.Unix, Architecture.X64, "osx-x64").TargetFilePath);
+      // Act
+      string actualBinary = Path.GetFileName(AgeKeygen.GetCommand(PlatformID.Unix, Architecture.X64, "osx-x64").TargetFilePath);
 
-    // Assert
-    Assert.Equal(expectedBinary, actualBinary);
+      // Assert
+      Assert.Equal(expectedBinary, actualBinary);
+    }
   }
 
   /// <summary>
