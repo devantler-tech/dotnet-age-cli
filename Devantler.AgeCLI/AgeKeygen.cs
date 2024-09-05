@@ -50,7 +50,7 @@ public static class AgeKeygen
     string[] lines = message.Split(Environment.NewLine);
     string publicKey = lines[1].Split(" ")[3];
     string privateKey = lines[2];
-    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
+    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
     var key = new AgeKey(
       publicKey,
       privateKey,
