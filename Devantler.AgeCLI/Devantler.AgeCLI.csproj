@@ -16,21 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="assets/binaries/*darwin-amd64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest">
-      <IncludeInPackage>true</IncludeInPackage>
-    </Content>
-    <Content Include="assets/binaries/*darwin-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest">
-      <IncludeInPackage>true</IncludeInPackage>
-    </Content>
-    <Content Include="assets/binaries/*linux-amd64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest">
-      <IncludeInPackage>true</IncludeInPackage>
-    </Content>
-    <Content Include="assets/binaries/*linux-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest">
-      <IncludeInPackage>true</IncludeInPackage>
-    </Content>
-    <Content Include="assets/binaries/*windows-amd64.exe" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest">
-      <IncludeInPackage>true</IncludeInPackage>
-    </Content>
+    <Content Include="assets/binaries/*darwin-amd64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="assets/binaries/*darwin-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="assets/binaries/*linux-amd64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="assets/binaries/*linux-arm64" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="assets/binaries/*windows-amd64.exe" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
