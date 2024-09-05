@@ -14,13 +14,22 @@
 │   ├── scripts
 │   └── workflows
 ├── Devantler.AgeCLI
-│   └── assets
-│       └── binaries
+│   └── runtimes
+│       ├── linux-arm64
+│       │   └── native
+│       ├── linux-x64
+│       │   └── native
+│       ├── osx-arm64
+│       │   └── native
+│       ├── osx-x64
+│       │   └── native
+│       └── win-x64
+│           └── native
 └── Devantler.AgeCLI.Tests
     ├── AgeKeygenTests
     └── Utils
 
-9 directories
+18 directories
 ```
 <!-- readme-tree end -->
 
