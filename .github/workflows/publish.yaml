@@ -17,12 +17,7 @@ jobs:
         id: version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/v}
       - name: Pack
-        run: |
-          dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }} --runtime osx-x64
-          dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }} --runtime osx-arm64
-          dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }} --runtime linux-x64
-          dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }} --runtime linux-arm64
-          dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }} --runtime win-x64
+        run: dotnet pack --configuration Release /p:Version=${{ steps.version.outputs.version }}
       - name: Add GitHub Packages as NuGet Source
         run: dotnet nuget add source --username devantler --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/devantler/index.json"
       - name: Push to GitHub Packages
