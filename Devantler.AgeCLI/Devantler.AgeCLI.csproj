@@ -8,11 +8,15 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+
+    <SelfContained>true</SelfContained>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Devantler.CLIRunner" Version="1.0.9" />
-    <PackageReference Include="Devantler.Keys.Age" Version="0.0.3" />
+    <PackageReference Include="Devantler.Keys.Age" Version="0.0.4" />
   </ItemGroup>
 
   <ItemGroup>
