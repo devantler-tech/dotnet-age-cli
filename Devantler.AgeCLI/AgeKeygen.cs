@@ -74,7 +74,7 @@ public static class AgeKeygen
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
     string key = await File.ReadAllTextAsync(path, token).ConfigureAwait(false);
-    string[] lines = key.Split(Environment.NewLine);
+    string[] lines = key.Split("\n");
     var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
     string publicKey = lines[1].Split(" ")[3];
     string privateKey = lines[2];
