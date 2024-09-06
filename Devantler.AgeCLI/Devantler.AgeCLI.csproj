@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="runtimes/*/native/*" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/" />
+    <None Include="runtimes/*/native/*" CopyToOutputDirectory="PreserveNewest" Link="%(Filename)%(Extension)" PackagePath="runtimes/" />
   </ItemGroup>
 
   <ItemGroup>
