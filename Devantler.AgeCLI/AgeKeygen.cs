@@ -31,7 +31,7 @@ public static class AgeKeygen
       (PlatformID.Win32NT, Architecture.X64, "win-x64") => "age-keygen-win-x64.exe",
       _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
     };
-    string binaryPath = Path.Combine(AppContext.BaseDirectory, binary);
+    string binaryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, binary);
     return !File.Exists(binaryPath) ?
       throw new FileNotFoundException($"{binaryPath} not found.") :
       Cli.Wrap(binaryPath);
