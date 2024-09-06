@@ -8,7 +8,6 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
-    <UseCurrentRuntimeIdentifier>true</UseCurrentRuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,13 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="runtimes/*/native/*">
+    <Content Include="runtimes/*/native/*">
       <Link>%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <Pack>true</Pack>
       <PackagePath>runtimes/</PackagePath>
-    </None>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
