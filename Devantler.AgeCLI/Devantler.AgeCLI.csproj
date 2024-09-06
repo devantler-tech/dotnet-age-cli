@@ -22,7 +22,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <Pack>true</Pack>
-      <PackagePath>runtimes/$(RuntimeIdentifier)/native/</PackagePath>
+      <PackagePath>runtimes/</PackagePath>
     </None>
   </ItemGroup>
 
