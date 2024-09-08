@@ -1,8 +1,8 @@
+using System.Globalization;
+using System.Runtime.InteropServices;
 using CliWrap;
 using Devantler.CLIRunner;
 using Devantler.Keys.Age;
-using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace Devantler.AgeCLI;
 
@@ -37,16 +37,16 @@ public static class AgeKeygen
       Cli.Wrap(binaryPath);
   }
 
-    /// <summary>
-    /// Generates a new Age key and returns it.
-    /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    public static async Task<AgeKey> InMemory(CancellationToken cancellationToken = default)
-    {
-        var (exitCode, message) = await CLI.RunAsync(Command, silent: true, includeStdErr: false, cancellationToken: cancellationToken).ConfigureAwait(false);
-        if (exitCode != 0)
+  /// <summary>
+  /// Generates a new Age key and returns it.
+  /// </summary>
+  /// <param name="cancellationToken"></param>
+  /// <returns></returns>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<AgeKey> InMemory(CancellationToken cancellationToken = default)
+  {
+    var (exitCode, message) = await CLI.RunAsync(Command, silent: true, includeStdErr: false, cancellationToken: cancellationToken).ConfigureAwait(false);
+    if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
@@ -62,22 +62,22 @@ public static class AgeKeygen
     return key;
   }
 
-    /// <summary>
-    /// Generates a new Age key and writes it to a file.
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    public static async Task<AgeKey> ToFile(string path, CancellationToken cancellationToken = default)
-    {
-        var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
-        if (exitCode != 0)
+  /// <summary>
+  /// Generates a new Age key and writes it to a file.
+  /// </summary>
+  /// <param name="path"></param>
+  /// <param name="cancellationToken"></param>
+  /// <returns></returns>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<AgeKey> ToFile(string path, CancellationToken cancellationToken = default)
+  {
+    var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+    if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
     }
-        string key = await File.ReadAllTextAsync(path, cancellationToken).ConfigureAwait(false);
-        string[] lines = key.Split("\n");
+    string key = await File.ReadAllTextAsync(path, cancellationToken).ConfigureAwait(false);
+    string[] lines = key.Split("\n");
     var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
     string publicKey = lines[1].Split(" ")[3];
     string privateKey = lines[2];
