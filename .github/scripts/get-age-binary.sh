@@ -22,5 +22,5 @@ get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "D
 get "https://getbin.io/FiloSottile/age?os=darwin&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/runtimes/osx-arm64/native" "age-keygen-osx-arm64" true
 get "https://getbin.io/FiloSottile/age?os=linux&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/runtimes/linux-x64/native" "age-keygen-linux-x64" true
 get "https://getbin.io/FiloSottile/age?os=linux&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/runtimes/linux-arm64/native" "age-keygen-linux-arm64" true
-get "https://getbin.io/FiloSottile/age?os=windows&arch=amd64" "age/age-keygen.exe" "Devantler.AgeCLI/runtimes/win-x64/native" "age-keygen-win-x64.exe" false
+get "https://getbin.io/FiloSottile/age?os=windows&arch=amd64" "age/age-keygen.exe" "Devantler.AgeCLI/runtimes/win-x64/native" "age-keygen-win-x64.exe" true
 rm -rf Devantler.AgeCLI/runtimes/*/native/age
