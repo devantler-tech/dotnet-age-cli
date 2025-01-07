@@ -38,14 +38,43 @@ public static class AgeKeygen
   }
 
   /// <summary>
+  /// Runs the age-keygen CLI command with the given arguments.
+  /// </summary>
+  /// <param name="arguments"></param>
+  /// <param name="validation"></param>
+  /// <param name="silent"></param>
+  /// <param name="includeStdErr"></param>
+  /// <param name="cancellationToken"></param>
+  /// <returns></returns>
+  public static async Task<(int ExitCode, string Message)> RunAsync(
+    string[] arguments,
+    CommandResultValidation validation = CommandResultValidation.ZeroExitCode,
+    bool silent = false,
+    bool includeStdErr = true,
+    CancellationToken cancellationToken = default)
+  {
+    return await CLI.RunAsync(
+      Command.WithArguments(arguments),
+      validation: validation,
+      silent: silent,
+      includeStdErr: includeStdErr,
+      cancellationToken: cancellationToken).ConfigureAwait(false);
+  }
+
+  /// <summary>
   /// Generates a new Age key and returns it.
   /// </summary>
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   /// <exception cref="InvalidOperationException"></exception>
+  [Obsolete("This method is deprecated. Use RunAsync instead.")]
   public static async Task<AgeKey> InMemory(CancellationToken cancellationToken = default)
   {
-    var (exitCode, message) = await CLI.RunAsync(Command, silent: true, includeStdErr: false, cancellationToken: cancellationToken).ConfigureAwait(false);
+    var (exitCode, message) = await RunAsync(
+      [],
+      silent: true,
+      includeStdErr: false,
+      cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
@@ -69,9 +98,10 @@ public static class AgeKeygen
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   /// <exception cref="InvalidOperationException"></exception>
+  [Obsolete("This method is deprecated. Use RunAsync instead.")]
   public static async Task<AgeKey> ToFile(string path, CancellationToken cancellationToken = default)
   {
-    var (exitCode, message) = await CLI.RunAsync(Command.WithArguments(["-o", path]), silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+    var (exitCode, message) = await RunAsync(["-o", path], silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
     {
       throw new InvalidOperationException($"Failed to generate key: {message}");
