@@ -23,13 +23,17 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: 🎯 Get version
+        run: |
+          BINARY_VERSION=$(./Devantler.AgeCLI/runtimes/linux-x64/native/age-keygen-linux-x64 --version)
+          echo "BINARY_VERSION=$BINARY_VERSION" >> $GITHUB_ENV
       - name: ✍🏻 Create PR
         uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update Age binary
-          title: Update Age binary
+          title: Update Age binary to ${{ env.BINARY_VERSION }}
           body: |
-            This PR updates the Age binary used by Devantler.AgeCLI to the latest version.
+            This PR updates the Age binary used by Devantler.AgeCLI to ${{ env.BINARY_VERSION }}.
           branch: update-age-binary
           delete-branch: true
           labels: dependencies
