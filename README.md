@@ -28,7 +28,7 @@
 └── Devantler.AgeCLI.Tests
     └── AgeKeygenTests
 
-17 directories
+18 directories
 ```
 <!-- readme-tree end -->
 
