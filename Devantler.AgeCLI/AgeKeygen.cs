@@ -1,8 +1,6 @@
-using System.Globalization;
 using System.Runtime.InteropServices;
 using CliWrap;
 using Devantler.CLIRunner;
-using Devantler.Keys.Age;
 
 namespace Devantler.AgeCLI;
 
