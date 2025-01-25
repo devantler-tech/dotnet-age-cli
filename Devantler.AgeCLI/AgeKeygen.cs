@@ -1,8 +1,6 @@
-using System.Globalization;
 using System.Runtime.InteropServices;
 using CliWrap;
 using Devantler.CLIRunner;
-using Devantler.Keys.Age;
 
 namespace Devantler.AgeCLI;
 
@@ -59,62 +57,5 @@ public static class AgeKeygen
       silent: silent,
       includeStdErr: includeStdErr,
       cancellationToken: cancellationToken).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  /// Generates a new Age key and returns it.
-  /// </summary>
-  /// <param name="cancellationToken"></param>
-  /// <returns></returns>
-  /// <exception cref="InvalidOperationException"></exception>
-  [Obsolete("This method is deprecated. Use RunAsync instead.")]
-  public static async Task<AgeKey> InMemory(CancellationToken cancellationToken = default)
-  {
-    var (exitCode, output) = await RunAsync(
-      [],
-      silent: true,
-      includeStdErr: false,
-      cancellationToken: cancellationToken).ConfigureAwait(false);
-    if (exitCode != 0)
-    {
-      throw new InvalidOperationException($"Failed to generate key: {output}");
-    }
-    string[] lines = output.Split(Environment.NewLine);
-    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
-    string publicKey = lines[1].Split(" ")[3];
-    string privateKey = lines[2];
-    var key = new AgeKey(
-      publicKey,
-      privateKey,
-      createdAt
-    );
-    return key;
-  }
-
-  /// <summary>
-  /// Generates a new Age key and writes it to a file.
-  /// </summary>
-  /// <param name="path"></param>
-  /// <param name="cancellationToken"></param>
-  /// <returns></returns>
-  /// <exception cref="InvalidOperationException"></exception>
-  [Obsolete("This method is deprecated. Use RunAsync instead.")]
-  public static async Task<AgeKey> ToFile(string path, CancellationToken cancellationToken = default)
-  {
-    var (exitCode, output) = await RunAsync(["-o", path], silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
-    if (exitCode != 0)
-    {
-      throw new InvalidOperationException($"Failed to generate key: {output}");
-    }
-    string key = await File.ReadAllTextAsync(path, cancellationToken).ConfigureAwait(false);
-    string[] lines = key.Split("\n");
-    var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture);
-    string publicKey = lines[1].Split(" ")[3];
-    string privateKey = lines[2];
-    return new AgeKey(
-      publicKey,
-      privateKey,
-      createdAt
-    );
   }
 }
