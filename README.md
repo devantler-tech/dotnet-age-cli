@@ -52,5 +52,5 @@ dotnet add package Devantler.AgeCLI
 ```csharp
 using Devantler.AgeCLI;
 
-var (exitCode, message) = await AgeKeygen.RunAsync(["arg1", "arg2"]);
+var (exitCode, output) = await AgeKeygen.RunAsync(["arg1", "arg2"]);
 ```

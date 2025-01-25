@@ -70,16 +70,16 @@ public static class AgeKeygen
   [Obsolete("This method is deprecated. Use RunAsync instead.")]
   public static async Task<AgeKey> InMemory(CancellationToken cancellationToken = default)
   {
-    var (exitCode, message) = await RunAsync(
+    var (exitCode, output) = await RunAsync(
       [],
       silent: true,
       includeStdErr: false,
       cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
     {
-      throw new InvalidOperationException($"Failed to generate key: {message}");
+      throw new InvalidOperationException($"Failed to generate key: {output}");
     }
-    string[] lines = message.Split(Environment.NewLine);
+    string[] lines = output.Split(Environment.NewLine);
     var createdAt = DateTime.Parse(lines[0].Split(" ")[2], CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
     string publicKey = lines[1].Split(" ")[3];
     string privateKey = lines[2];
@@ -101,10 +101,10 @@ public static class AgeKeygen
   [Obsolete("This method is deprecated. Use RunAsync instead.")]
   public static async Task<AgeKey> ToFile(string path, CancellationToken cancellationToken = default)
   {
-    var (exitCode, message) = await RunAsync(["-o", path], silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+    var (exitCode, output) = await RunAsync(["-o", path], silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
     {
-      throw new InvalidOperationException($"Failed to generate key: {message}");
+      throw new InvalidOperationException($"Failed to generate key: {output}");
     }
     string key = await File.ReadAllTextAsync(path, cancellationToken).ConfigureAwait(false);
     string[] lines = key.Split("\n");

@@ -15,10 +15,10 @@ public class RunAsyncTests
   public async Task RunAsync_Version_ReturnsVersion()
   {
     // Act
-    var (exitCode, message) = await AgeKeygen.RunAsync(["--version"]);
+    var (exitCode, output) = await AgeKeygen.RunAsync(["--version"]);
 
     // Assert
     Assert.Equal(0, exitCode);
-    Assert.Matches(@"^v\d+\.\d+\.\d+$", message.Trim());
+    Assert.Matches(@"^v\d+\.\d+\.\d+$", output.Trim());
   }
 }
