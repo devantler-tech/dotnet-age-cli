@@ -30,8 +30,8 @@ jobs:
       - name: ✍🏻 Create PR
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: Update Age to ${{ env.BINARY_VERSION }}
-          title: Update Age binary to ${{ env.BINARY_VERSION }}
+          commit-message: "feat: Update  Age to ${{ env.BINARY_VERSION }}"
+          title: "feat: Update Age binary to ${{ env.BINARY_VERSION }}"
           body: |
             This PR updates the Age binary used by Devantler.AgeCLI to ${{ env.BINARY_VERSION }}.
           branch: update-age-binary
