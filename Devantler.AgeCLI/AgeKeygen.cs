@@ -30,9 +30,15 @@ public static class AgeKeygen
       _ => throw new PlatformNotSupportedException($"Unsupported platform: {Environment.OSVersion.Platform} {RuntimeInformation.ProcessArchitecture}"),
     };
     string binaryPath = Path.Combine(AppContext.BaseDirectory, binary);
-    return !File.Exists(binaryPath) ?
-      throw new FileNotFoundException($"{binaryPath} not found.") :
-      Cli.Wrap(binaryPath);
+    if (!File.Exists(binaryPath))
+    {
+      throw new FileNotFoundException($"{binaryPath} not found.");
+    }
+    if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+      File.SetUnixFileMode(binaryPath, UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute);
+    }
+    return Cli.Wrap(binaryPath);
   }
 
   /// <summary>
