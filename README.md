@@ -13,22 +13,24 @@
 ├── .github
 │   ├── scripts
 │   └── workflows
-├── Devantler.AgeCLI
-│   └── runtimes
-│       ├── linux-arm64
-│       │   └── native
-│       ├── linux-x64
-│       │   └── native
-│       ├── osx-arm64
-│       │   └── native
-│       ├── osx-x64
-│       │   └── native
-│       └── win-x64
-│           └── native
-└── Devantler.AgeCLI.Tests
-    └── AgeKeygenTests
+├── src
+│   └── Devantler.AgeCLI
+│       └── runtimes
+│           ├── linux-arm64
+│           │   └── native
+│           ├── linux-x64
+│           │   └── native
+│           ├── osx-arm64
+│           │   └── native
+│           ├── osx-x64
+│           │   └── native
+│           └── win-x64
+│               └── native
+└── tests
+    └── Devantler.AgeCLI.Tests
+        └── AgeKeygenTests
 
-18 directories
+20 directories
 ```
 <!-- readme-tree end -->
 
