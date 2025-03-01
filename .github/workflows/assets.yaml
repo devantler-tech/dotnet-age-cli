@@ -27,7 +27,7 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: 🎯 Get version
         run: |
-          BINARY_VERSION=$(./Devantler.AgeCLI/runtimes/linux-x64/native/age-keygen-linux-x64 --version)
+          BINARY_VERSION=$(./src/Devantler.AgeCLI/runtimes/linux-x64/native/age-keygen-linux-x64 --version)
           echo "BINARY_VERSION=$BINARY_VERSION" >> $GITHUB_ENV
       - name: ✍🏻 Create PR
         uses: peter-evans/create-pull-request@v7
