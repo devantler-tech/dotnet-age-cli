@@ -26,11 +26,12 @@
 │           │   └── native
 │           └── win-x64
 │               └── native
+│                   └── age
 └── tests
     └── Devantler.AgeCLI.Tests
         └── AgeKeygenTests
 
-20 directories
+21 directories
 ```
 <!-- readme-tree end -->
 
