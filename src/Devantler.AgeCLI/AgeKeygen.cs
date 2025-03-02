@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using CliWrap;
+using CliWrap.Buffered;
 using Devantler.CLIRunner;
 
 namespace Devantler.AgeCLI;
@@ -57,11 +58,13 @@ public static class AgeKeygen
     bool includeStdErr = true,
     CancellationToken cancellationToken = default)
   {
-    return await CLI.RunAsync(
-      Command.WithArguments(arguments),
-      validation: validation,
-      silent: silent,
-      includeStdErr: includeStdErr,
-      cancellationToken: cancellationToken).ConfigureAwait(false);
+    using var stdOut = Console.OpenStandardInput();
+    using var stdErr = Console.OpenStandardError();
+    var command = Command.WithArguments(arguments)
+      .WithValidation(validation)
+      .WithStandardOutputPipe(silent ? PipeTarget.Null : PipeTarget.ToStream(stdOut))
+      .WithStandardErrorPipe(silent || !includeStdErr ? PipeTarget.Null : PipeTarget.ToStream(stdErr));
+    var result = await command.ExecuteBufferedAsync(cancellationToken);
+    return (result.ExitCode, result.StandardOutput + result.StandardError);
   }
 }
