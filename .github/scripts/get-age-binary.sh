@@ -23,9 +23,9 @@ get() {
   chmod +x "$target_dir/$target_name"
 }
 
-get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/runtimes/osx-x64/native" "age-keygen-osx-x64" "tar"
-get "https://getbin.io/FiloSottile/age?os=darwin&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/runtimes/osx-arm64/native" "age-keygen-osx-arm64" "tar"
-get "https://getbin.io/FiloSottile/age?os=linux&arch=amd64" "age/age-keygen" "Devantler.AgeCLI/runtimes/linux-x64/native" "age-keygen-linux-x64" "tar"
-get "https://getbin.io/FiloSottile/age?os=linux&arch=arm64" "age/age-keygen" "Devantler.AgeCLI/runtimes/linux-arm64/native" "age-keygen-linux-arm64" "tar"
-get "https://getbin.io/FiloSottile/age?os=windows&arch=amd64" "age/age-keygen.exe" "Devantler.AgeCLI/runtimes/win-x64/native" "age-keygen-win-x64.exe" "zip"
+get "https://getbin.io/FiloSottile/age?os=darwin&arch=amd64" "age/age-keygen" "src/Devantler.AgeCLI/runtimes/osx-x64/native" "age-keygen-osx-x64" "tar"
+get "https://getbin.io/FiloSottile/age?os=darwin&arch=arm64" "age/age-keygen" "src/Devantler.AgeCLI/runtimes/osx-arm64/native" "age-keygen-osx-arm64" "tar"
+get "https://getbin.io/FiloSottile/age?os=linux&arch=amd64" "age/age-keygen" "src/Devantler.AgeCLI/runtimes/linux-x64/native" "age-keygen-linux-x64" "tar"
+get "https://getbin.io/FiloSottile/age?os=linux&arch=arm64" "age/age-keygen" "src/Devantler.AgeCLI/runtimes/linux-arm64/native" "age-keygen-linux-arm64" "tar"
+get "https://getbin.io/FiloSottile/age?os=windows&arch=amd64" "age/age-keygen.exe" "src/Devantler.AgeCLI/runtimes/win-x64/native" "age-keygen-win-x64.exe" "zip"
 rm -rf Devantler.AgeCLI/runtimes/*/native/age
