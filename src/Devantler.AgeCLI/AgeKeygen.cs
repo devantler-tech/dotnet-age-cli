@@ -48,30 +48,25 @@ public static class AgeKeygen
   /// <param name="arguments"></param>
   /// <param name="validation"></param>
   /// <param name="silent"></param>
-  /// <param name="includeStdErr"></param>
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   public static async Task<(int ExitCode, string Message)> RunAsync(
     string[] arguments,
     CommandResultValidation validation = CommandResultValidation.ZeroExitCode,
     bool silent = false,
-    bool includeStdErr = true,
     CancellationToken cancellationToken = default)
   {
-    Command command;
-    var stdOutBuffer = new StringBuilder();
-    var stdErrBuffer = new StringBuilder();
-    using (var stdInConsole = Console.OpenStandardInput())
-    using (var stdOutConsole = Console.OpenStandardOutput())
-    using (var stdErrConsole = Console.OpenStandardError())
-    {
-      command = Command.WithArguments(arguments)
-        .WithValidation(validation)
-        .WithStandardInputPipe(PipeSource.FromStream(stdInConsole))
-        .WithStandardOutputPipe(silent ? PipeTarget.ToStringBuilder(stdOutBuffer) : PipeTarget.Merge(PipeTarget.ToStringBuilder(stdOutBuffer), PipeTarget.ToStream(stdOutConsole)))
-        .WithStandardErrorPipe(silent && !includeStdErr ? PipeTarget.ToStringBuilder(stdErrBuffer) : PipeTarget.Merge(PipeTarget.ToStringBuilder(stdErrBuffer), PipeTarget.ToStream(stdErrConsole)));
-    }
-    var result = await command.ExecuteAsync(cancellationToken);
-    return (result.ExitCode, stdOutBuffer.ToString() + stdErrBuffer.ToString());
+    using var stdInConsole = Console.OpenStandardInput();
+    using var stdOutConsole = silent ? Stream.Null : Console.OpenStandardOutput();
+    using var stdErrConsole = silent ? Stream.Null : Console.OpenStandardError();
+
+    var command = Command.WithArguments(arguments)
+      .WithValidation(validation)
+      .WithStandardInputPipe(PipeSource.FromStream(stdInConsole))
+      .WithStandardOutputPipe(PipeTarget.ToStream(stdOutConsole))
+      .WithStandardErrorPipe(PipeTarget.ToStream(stdErrConsole));
+
+    var result = await command.ExecuteBufferedAsync(cancellationToken);
+    return (result.ExitCode, result.StandardOutput.ToString() + result.StandardError.ToString());
   }
 }

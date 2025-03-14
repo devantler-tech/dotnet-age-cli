@@ -3,7 +3,7 @@ using CliWrap;
 namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
 
 /// <summary>
-/// Tests for the <see cref="AgeKeygen.RunAsync(string[], CommandResultValidation, bool, bool, CancellationToken)" /> method.
+/// Tests for the <see cref="AgeKeygen.RunAsync(string[], CommandResultValidation, bool, CancellationToken)" /> method.
 /// </summary>
 public class RunAsyncTests
 {
