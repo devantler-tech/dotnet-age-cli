@@ -58,16 +58,19 @@ public static class AgeKeygen
     bool includeStdErr = true,
     CancellationToken cancellationToken = default)
   {
-    using var stdInConsole = Console.OpenStandardInput();
-    using var stdOutConsole = Console.OpenStandardOutput();
-    using var stdErrConsole = Console.OpenStandardError();
+    Command command;
     var stdOutBuffer = new StringBuilder();
     var stdErrBuffer = new StringBuilder();
-    var command = Command.WithArguments(arguments)
-      .WithValidation(validation)
-      .WithStandardInputPipe(PipeSource.FromStream(stdInConsole))
-      .WithStandardOutputPipe(silent ? PipeTarget.ToStringBuilder(stdOutBuffer) : PipeTarget.Merge(PipeTarget.ToStringBuilder(stdOutBuffer), PipeTarget.ToStream(stdOutConsole)))
-      .WithStandardErrorPipe(silent && !includeStdErr ? PipeTarget.ToStringBuilder(stdErrBuffer) : PipeTarget.Merge(PipeTarget.ToStringBuilder(stdErrBuffer), PipeTarget.ToStream(stdErrConsole)));
+    using (var stdInConsole = Console.OpenStandardInput())
+    using (var stdOutConsole = Console.OpenStandardOutput())
+    using (var stdErrConsole = Console.OpenStandardError())
+    {
+      command = Command.WithArguments(arguments)
+        .WithValidation(validation)
+        .WithStandardInputPipe(PipeSource.FromStream(stdInConsole))
+        .WithStandardOutputPipe(silent ? PipeTarget.ToStringBuilder(stdOutBuffer) : PipeTarget.Merge(PipeTarget.ToStringBuilder(stdOutBuffer), PipeTarget.ToStream(stdOutConsole)))
+        .WithStandardErrorPipe(silent && !includeStdErr ? PipeTarget.ToStringBuilder(stdErrBuffer) : PipeTarget.Merge(PipeTarget.ToStringBuilder(stdErrBuffer), PipeTarget.ToStream(stdErrConsole)));
+    }
     var result = await command.ExecuteAsync(cancellationToken);
     return (result.ExitCode, stdOutBuffer.ToString() + stdErrBuffer.ToString());
   }
