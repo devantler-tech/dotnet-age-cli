@@ -56,13 +56,11 @@ public static class AgeKeygen
     bool silent = false,
     CancellationToken cancellationToken = default)
   {
-    using var stdInConsole = Console.OpenStandardInput();
     using var stdOutConsole = silent ? Stream.Null : Console.OpenStandardOutput();
     using var stdErrConsole = silent ? Stream.Null : Console.OpenStandardError();
 
     var command = Command.WithArguments(arguments)
       .WithValidation(validation)
-      .WithStandardInputPipe(PipeSource.FromStream(stdInConsole))
       .WithStandardOutputPipe(PipeTarget.ToStream(stdOutConsole))
       .WithStandardErrorPipe(PipeTarget.ToStream(stdErrConsole));
 
