@@ -1,4 +1,4 @@
-name: Assets
+name: Embed Binaries
 
 on:
   schedule:
@@ -8,44 +8,10 @@ on:
 permissions: {}
 
 jobs:
-  download-binary:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate GitHub App Token
-        uses: tibdex/github-app-token@v2
-        id: generate-token
-        with:
-          app_id: ${{ vars.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
-          token: ${{ steps.generate-token.outputs.token }}
-      - name: ⚙️ Install bsdtar
-        run: |
-          sudo apt-get update
-          sudo apt-get install libarchive-tools
-      - name: ⤵️ Get Age binary
-        run: |
-          ./.github/scripts/get-age-binary.sh
-      - name: 🎯 Get version
-        run: |
-          BINARY_VERSION=$(./src/Devantler.AgeCLI/runtimes/linux-x64/native/age-keygen-linux-x64 --version)
-          echo "BINARY_VERSION=$BINARY_VERSION" >> $GITHUB_ENV
-      - name: ✍🏻 Create PR
-        uses: peter-evans/create-pull-request@v7
-        env:
-          BINARY_VERSION: ${{ env.BINARY_VERSION }}
-        with:
-          commit-message: "feat: Update  Age to ${{ env.BINARY_VERSION }}"
-          title: "feat: Update Age binary to ${{ env.BINARY_VERSION }}"
-          body: |
-            This PR updates the Age binary used by Devantler.AgeCLI to ${{ env.BINARY_VERSION }}.
-          branch: update-age-binary
-          delete-branch: true
-          labels: dependencies
-          reviewers: devantler
-          assignees: devantler
-          signoff: true
-          token: ${{ steps.generate-token.outputs.token }}
-          sign-commits: true
+  embed-binaries:
+    uses: devantler-tech/workflows/.github/workflows/dotnet-embed-binaries.yaml@main
+    secrets: inherit
+    with:
+      BINARY_NAME: age-keygen
+      DOTNET_PROJECT_NAME: Devantler.AgeCLI
+      SCRIPT_PATH: scripts/get-age-binary.sh
