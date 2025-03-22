@@ -15,3 +15,4 @@ jobs:
       BINARY_NAME: age-keygen
       DOTNET_PROJECT_NAME: Devantler.AgeCLI
       SCRIPT_PATH: scripts/get-age-binary.sh
+      VERSION_ARGS: --version
