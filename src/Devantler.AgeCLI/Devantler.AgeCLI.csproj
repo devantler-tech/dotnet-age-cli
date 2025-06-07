@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="CLIWrap" Version="3.8.2" />
-    <PackageReference Include="Devantler.Keys.Age" Version="1.0.28" />
+    <PackageReference Include="Devantler.Keys.Age" Version="1.0.29" />
   </ItemGroup>
 
   <ItemGroup>
