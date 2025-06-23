@@ -21,6 +21,8 @@ jobs:
         uses: jaxxstorm/action-install-gh-release@v2.1.0
         with:
           repo: FiloSottile/age
+          binaries-location: age
+          chmod: 0755
       - name: Test .NET solution or project
         uses: devantler-tech/dotnet-test-action@main
         with:
