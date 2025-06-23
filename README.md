@@ -4,46 +4,21 @@
 [![Test](https://github.com/devantler-tech/dotnet-age-cli/actions/workflows/test.yaml/badge.svg)](https://github.com/devantler-tech/dotnet-age-cli/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/devantler-tech/dotnet-age-cli/graph/badge.svg?token=RhQPb4fE7z)](https://codecov.io/gh/devantler-tech/dotnet-age-cli)
 
-<details>
-  <summary>Show/hide folder structure</summary>
-
-<!-- readme-tree start -->
-```
-.
-├── .github
-│   └── workflows
-├── scripts
-├── src
-│   └── Devantler.AgeCLI
-│       └── runtimes
-│           ├── linux-arm64
-│           │   └── native
-│           ├── linux-x64
-│           │   └── native
-│           ├── osx-arm64
-│           │   └── native
-│           ├── osx-x64
-│           │   └── native
-│           └── win-x64
-│               └── native
-└── tests
-    └── Devantler.AgeCLI.Tests
-        └── AgeKeygenTests
-
-20 directories
-```
-<!-- readme-tree end -->
-
-</details>
-
 A simple .NET library that embeds the Age CLI.
 
 ## 🚀 Getting Started
 
+### Prerequisites
+
+- .NET 9.0 or later
+- [Age CLI](https://github.com/FiloSottile/age#installation) installed and available in your system's PATH
+
+### Installation
+
 To get started, you can install the package from NuGet.
 
 ```bash
-dotnet add package Devantler.AgeCLI
+dotnet add package DevantlerTech.AgeCLI
 ```
 
 ## 📝 Usage
@@ -52,7 +27,7 @@ dotnet add package Devantler.AgeCLI
 > The library currently only supports the `age-keygen` binary commands. The `age` binary commands are yet to be implemented.
 
 ```csharp
-using Devantler.AgeCLI;
+using DevantlerTech.AgeCLI;
 
 var (exitCode, output) = await AgeKeygen.RunAsync(["arg1", "arg2"]);
 ```

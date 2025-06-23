@@ -1,6 +1,6 @@
 using CliWrap;
 
-namespace Devantler.AgeCLI.Tests.AgeKeygenTests;
+namespace DevantlerTech.AgeCLI.Tests.AgeKeygenTests;
 
 /// <summary>
 /// Tests for the <see cref="AgeKeygen.RunAsync(string[], CommandResultValidation, bool, CancellationToken)" /> method.
