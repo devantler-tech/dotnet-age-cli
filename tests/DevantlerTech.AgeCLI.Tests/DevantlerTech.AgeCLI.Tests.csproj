@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Devantler.AgeCLI\Devantler.AgeCLI.csproj" />
+    <ProjectReference Include="..\..\src\DevantlerTech.AgeCLI\DevantlerTech.AgeCLI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="CLIWrap" Version="3.9.0" />
-    <PackageReference Include="Devantler.Keys.Age" Version="1.0.30" />
+    <PackageReference Include="DevantlerTech.Keys.Age" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Devantler.AgeCLI.Tests" />
+    <InternalsVisibleTo Include="DevantlerTech.AgeCLI.Tests" />
   </ItemGroup>
 </Project>
