@@ -11,28 +11,25 @@ public static class AgeKeygen
   /// <summary>
   /// The age-keygen CLI command.
   /// </summary>
-  public static Command Command
+  public static Command GetCommand()
   {
-    get
-    {
-      string binaryName = OperatingSystem.IsWindows() ? "age-keygen.exe" : "age-keygen";
-      string? pathEnv = Environment.GetEnvironmentVariable("PATH");
+    string binaryName = OperatingSystem.IsWindows() ? "age-keygen.exe" : "age-keygen";
+    string? pathEnv = Environment.GetEnvironmentVariable("PATH");
 
-      if (!string.IsNullOrEmpty(pathEnv))
+    if (!string.IsNullOrEmpty(pathEnv))
+    {
+      string[] paths = pathEnv.Split(Path.PathSeparator);
+      foreach (string dir in paths)
       {
-        string[] paths = pathEnv.Split(Path.PathSeparator);
-        foreach (string dir in paths)
+        string fullPath = Path.Combine(dir, binaryName);
+        if (File.Exists(fullPath))
         {
-          string fullPath = Path.Combine(dir, binaryName);
-          if (File.Exists(fullPath))
-          {
-            return Cli.Wrap(fullPath);
-          }
+          return Cli.Wrap(fullPath);
         }
       }
-
-      throw new FileNotFoundException($"The '{binaryName}' CLI was not found in PATH.");
     }
+
+    throw new FileNotFoundException($"The '{binaryName}' CLI was not found in PATH.");
   }
 
   /// <summary>
@@ -52,7 +49,7 @@ public static class AgeKeygen
     using var stdOutConsole = silent ? Stream.Null : Console.OpenStandardOutput();
     using var stdErrConsole = silent ? Stream.Null : Console.OpenStandardError();
 
-    var command = Command.WithArguments(arguments)
+    var command = GetCommand().WithArguments(arguments)
       .WithValidation(validation)
       .WithStandardOutputPipe(PipeTarget.ToStream(stdOutConsole))
       .WithStandardErrorPipe(PipeTarget.ToStream(stdErrConsole));
