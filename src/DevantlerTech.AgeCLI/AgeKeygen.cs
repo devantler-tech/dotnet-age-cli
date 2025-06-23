@@ -15,7 +15,7 @@ public static class AgeKeygen
   {
     get
     {
-      string binaryName = "age-keygen";
+      string binaryName = OperatingSystem.IsWindows() ? "age-keygen.exe" : "age-keygen";
       string? pathEnv = Environment.GetEnvironmentVariable("PATH");
 
       if (!string.IsNullOrEmpty(pathEnv))
