@@ -11,7 +11,7 @@ public static class AgeKeygen
   /// <summary>
   /// The age-keygen CLI command.
   /// </summary>
-  static Command Command
+  public static Command Command
   {
     get
     {
