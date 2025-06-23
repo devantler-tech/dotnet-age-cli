@@ -18,7 +18,7 @@ A simple .NET library that embeds the Age CLI.
 To get started, you can install the package from NuGet.
 
 ```bash
-dotnet add package Devantler.AgeCLI
+dotnet add package DevantlerTech.AgeCLI
 ```
 
 ## 📝 Usage
@@ -27,7 +27,7 @@ dotnet add package Devantler.AgeCLI
 > The library currently only supports the `age-keygen` binary commands. The `age` binary commands are yet to be implemented.
 
 ```csharp
-using Devantler.AgeCLI;
+using DevantlerTech.AgeCLI;
 
 var (exitCode, output) = await AgeKeygen.RunAsync(["arg1", "arg2"]);
 ```
